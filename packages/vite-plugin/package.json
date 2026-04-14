@@ -1,0 +1,33 @@
+{
+  "name": "@chonky/vite-plugin",
+  "version": "0.1.0",
+  "description": "Chonky Vite plugin — build integration for Vite projects",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0"
+  },
+  "dependencies": {
+    "@chonky/transpiler": "workspace:*"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  }
+}

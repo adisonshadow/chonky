@@ -1,0 +1,30 @@
+{
+  "name": "@chonky/cli",
+  "version": "0.1.0",
+  "description": "Chonky CLI — init, dev, build, graph, optimize, view, revert",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "chonky": "./bin/chonky.js"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chonky/runtime": "workspace:*",
+    "@chonky/transpiler": "workspace:*",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "inquirer": "^13.4.1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  }
+}

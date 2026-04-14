@@ -1,0 +1,24 @@
+{
+  "name": "chonky-monorepo",
+  "private": true,
+  "packageManager": "yarn@4.13.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn workspaces foreach -A --topological run build",
+    "test": "vitest run",
+    "lint": "tsc --noEmit",
+    "clean": "yarn workspaces foreach -A run clean"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@types/babel__core": "^7",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.8.0",
+    "vitest": "^3.1.0"
+  }
+}

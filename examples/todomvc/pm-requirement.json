@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "projectId": "chonky-todomvc",
+  "rules": [
+    {
+      "id": "RULE-NO-ALERT",
+      "description": "Do not use window.alert — use in-app notification instead",
+      "excluded": [
+        {
+          "type": "api",
+          "target": "alert",
+          "reason": "alert() blocks the main thread and breaks UX"
+        }
+      ],
+      "severity": "warning"
+    },
+    {
+      "id": "RULE-NO-JQUERY",
+      "description": "Do not use jQuery — use React APIs",
+      "excluded": [
+        {
+          "type": "import",
+          "target": "jquery",
+          "reason": "jQuery conflicts with React's virtual DOM"
+        }
+      ],
+      "severity": "error"
+    }
+  ]
+}

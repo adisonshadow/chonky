@@ -1,0 +1,74 @@
+---
+description: Chonky repo AI coding standards — English-only comments and baseline practices
+alwaysApply: true
+---
+
+# Chonky — AI coding rules
+
+## Code comments: English only
+
+- **All comments in source code must be written in English.** This includes `//`, `/* */`, `///` doc blocks, `#` (shell, Python, etc.), and inline annotation beside code.
+- **Do not** use Chinese or other languages in comments. If you need to reference a Chinese product name, keep the proper noun and explain in English (e.g. `// "胖蜜蜂" branding string`).
+- **User-visible text** (UI copy, i18n messages, error strings shown to users) may be localized per product requirements — that is **not** a “code comment” and is exempt.
+
+```typescript
+// ✅ GOOD: explains intent in English
+// Emit manifest for REQ-USER-LOGIN-01 for the agent pipeline.
+
+// ❌ BAD: comment language must not be non-English
+// 生成 manifest 供智能体读取
+```
+
+## Project structure
+
+This is a **monorepo**. See [`docs/project-structure.md`](../../docs/project-structure.md) for the full directory map. Key top-level paths:
+
+| Path | Purpose |
+|------|---------|
+| `packages/core` | `@chonky/core` — unified entry, re-exports |
+| `packages/transpiler` | `@chonky/transpiler` — Babel/SWC compile plugin |
+| `packages/runtime` | `@chonky/runtime` — browser runtime (metadata, verify, wrapper) |
+| `packages/cli` | `@chonky/cli` — CLI commands (`init`, `dev`, `build`, `graph`, `optimize`, `view`, `revert`) |
+| `packages/devtools` | `@chonky/devtools` — browser DevTools panel |
+| `packages/ui` | `@chonky/ui` — optimized components (`Image`, etc.) |
+| `packages/vite-plugin` | `@chonky/vite-plugin` — Vite build integration |
+| `packages/webpack-plugin` | `@chonky/webpack-plugin` — Webpack build integration |
+| `crates/chonkyc` | Phase-2 Rust compiler binary |
+| `examples/todomvc` | Chonky TodoMVC demo app |
+| `docs/` | Design docs, specs, roadmap |
+| `scripts/` | Build / CI / release helpers |
+
+When adding a new package, place it under `packages/`.
+
+## Package manager: Yarn 4 (Berry)
+
+This project uses **Yarn 4** via Corepack (`corepack prepare yarn@4 --activate`). Workspace packages are declared in the root `package.json` `"workspaces"` field.
+
+## Adding dependencies (MUST follow — no exceptions)
+
+**NEVER add dependencies by directly editing `package.json`.** Always install via the terminal so that the lockfile stays in sync and versions are verified against the registry.
+
+Before installing, set the network proxy, then use `yarn add`:
+
+```bash
+export http_proxy=http://127.0.0.1:7897
+export https_proxy=http://127.0.0.1:7897
+yarn add <package>
+```
+
+To add a dependency to a specific workspace package, use the `--cwd` flag or `-w` for root:
+
+```bash
+yarn workspace @chonky/cli add commander inquirer
+yarn add -D typescript vitest -w   # root devDependency
+```
+
+Multi-package example: `yarn add @babel/core @babel/types @babel/template`.
+
+When the user or a task asks to "add a package", respond with the exact `yarn add` command to run — **do NOT** produce a diff against `package.json` or edit `package.json` directly.
+
+## General (when editing this repo)
+
+- Prefer changes that stay **small and scoped** to the task; avoid unrelated refactors.
+- Match **existing naming, formatting, and import style** in the files you touch.
+- If the project uses route-level Swagger from comments, update those route annotations when behavior changes (see project conventions).

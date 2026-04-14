@@ -1,0 +1,31 @@
+{
+  "name": "@chonky/webpack-plugin",
+  "version": "0.1.0",
+  "description": "Chonky Webpack plugin — build integration for Webpack projects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --dts",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "webpack": "^5.0.0"
+  },
+  "dependencies": {
+    "@chonky/transpiler": "workspace:*"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  }
+}

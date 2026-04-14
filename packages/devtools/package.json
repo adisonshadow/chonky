@@ -1,0 +1,22 @@
+{
+  "name": "@chonky/devtools",
+  "version": "0.1.0",
+  "description": "Chonky DevTools — browser extension panel for render metadata visualization",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chonky/runtime": "workspace:*"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  }
+}
