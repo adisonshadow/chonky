@@ -1,7 +1,12 @@
-```markdown
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="168" />
+</p>
+
 # 🐝 Chonky（胖蜜蜂）
 
-> 第一个面向**机器自己**的编程语言，也可能是最后一个由**人类主导设计**的编程语言。
+[English](README.md) · **简体中文**
+
+第一个面向**机器自己**的编程语言，也可能是最后一个由**人类主导设计**的编程语言。
 
 Chonky 不是为你写的，是为 AI 写的。  
 但在 AI 为你写代码的时代，这就是你能用的、最简单的编程语言——**即使你一行代码都不会写**。

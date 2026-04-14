@@ -1,7 +1,12 @@
-```markdown
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="168" />
+</p>
+
 # 🐝 Chonky (The Chubby Bee)
 
-> The first programming language designed **for machines themselves**, and possibly the last programming language **designed by humans**.
+**English** · [简体中文](README.zh-CN.md)
+
+The first programming language designed **for machines themselves**, and possibly the last programming language **designed by humans**.
 
 Chonky is not written for you. It is written for AI.  
 But in an era where AI writes code for you, this is the simplest programming language you can use—**even if you cannot write a single line of code**.
