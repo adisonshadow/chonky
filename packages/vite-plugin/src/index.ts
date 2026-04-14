@@ -52,9 +52,15 @@ export function chonkyVitePlugin(options: ChonkyVitePluginOptions = {}) {
           plugins: [
             [chonkyBabelPlugin, { projectRoot, mode: resolvedMode }],
           ],
-          presets: [
-            ['@babel/preset-typescript', { isTSX: id.endsWith('.tsx'), allExtensions: true }],
-          ],
+          presets: (() => {
+            const p: [string, Record<string, unknown>][] = [
+              ['@babel/preset-typescript', { isTSX: id.endsWith('.tsx'), allExtensions: true }],
+            ];
+            if (/\.(tsx|jsx)$/.test(id)) {
+              p.push(['@babel/preset-react', { runtime: 'automatic' }]);
+            }
+            return p;
+          })(),
           sourceMaps: true,
         });
 
