@@ -1,4 +1,4 @@
-/** @type {import('@chonky/transpiler').ChonkyConfig} */
+/** @type {import('@chonkylang/transpiler').ChonkyConfig} */
 module.exports = {
   verification: {
     strictBinding: true,

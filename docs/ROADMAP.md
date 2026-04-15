@@ -30,37 +30,37 @@ Without disrupting the existing TypeScript compiler ecosystem, implement Chonky'
 
 - **Goal:** Implement compile-time transformation of Chonky extended syntax, converting `.chonky.ts` / `.cts` files into standard TypeScript code.
 - **Key Tasks:**
-  - Develop `@chonky/babel-plugin` (or SWC plugin) to recognize and process the following syntax nodes:
+  - Develop `@chonkylang/babel-plugin` (or SWC plugin) to recognize and process the following syntax nodes:
     - `defineRequirement(...)` → Strip wrapper, output pure object, and generate independent JSON manifest file.
     - `machine:assert for "ID" { ... }` → Transform into Vitest/Jest test case code.
     - `with moduleCalls { ... }` → Preserve as comments or metadata for static analysis tools to read.
   - Implement automatic JSX component wrapping logic to inject render metadata collection hooks (development mode only).
   - Provide Source Map support to ensure debuggability of compiled code.
-- **Deliverables:** `@chonky/transpiler` npm package, including the plugin itself and accompanying type definitions.
+- **Deliverables:** `@chonkylang/transpiler` npm package, including the plugin itself and accompanying type definitions.
 
 ##### Milestone 1.3: Runtime Library and Browser-Side Infrastructure
 
 - **Goal:** Provide essential browser-side runtime functionalities to support metadata collection, validation execution, and optimization components.
 - **Key Tasks:**
-  - Develop `@chonky/runtime` package, including:
+  - Develop `@chonkylang/runtime` package, including:
     - `ChonkyRenderer` class: Responsible for collecting and maintaining `__CHONKY_RENDER_META__` data.
     - `Image` component: Integrated with resource optimization decision logic, reading silent mode thresholds from configuration.
     - `verify` runtime helper function: Used for assertion execution in development environment.
   - Develop a browser Developer Tools panel (Chonky DevTools) to visualize render metadata, dependency graphs, and requirement completion status.
-- **Deliverables:** `@chonky/runtime` and `@chonky/devtools` npm packages.
+- **Deliverables:** `@chonkylang/runtime` and `@chonkylang/devtools` npm packages.
 
 ##### Milestone 1.4: CLI Tool and Static Analyzer
 
 - **Goal:** Provide a command-line entry point encapsulating build processes, dependency graph generation, and optimization prompt interactions.
 - **Key Tasks:**
-  - Develop `@chonky/cli`, providing the following commands:
+  - Develop `@chonkylang/cli`, providing the following commands:
     - `chonky init`: Interactively initialize a Chonky project (generates `chonky.config.js`, `tsconfig` extension, directory structure, and sample `.req.ts` files). Supports `--yes` flag for AI Agent silent invocation.
     - `chonky dev`: Start development server, inject runtime library, and enable metadata collection.
     - `chonky build`: Execute production build, automatically tree-shaking all debugging code.
     - `chonky graph`: Invoke static analyzer (based on TypeScript Compiler API or madge) to generate module dependency graph JSON.
     - `chonky optimize`: Interactively scan project resources, prompt based on silent mode thresholds, and execute optimizations.
   - Integrate Webpack / Vite plugins to lower the barrier for integration with mainstream build tools.
-- **Deliverables:** `@chonky/cli` npm package, along with corresponding Vite/Webpack plugins.
+- **Deliverables:** `@chonkylang/cli` npm package, along with corresponding Vite/Webpack plugins.
 
 ##### Milestone 1.5: Semantic Translation View (Human Fallback Mechanism)
 
@@ -114,7 +114,7 @@ Rewrite the Chonky compiler core in Rust, replacing the Babel/SWC transpilation 
 
 - **Goal:** Seamlessly integrate the Rust compiler into existing CLI tools and build plugin systems, ensuring a smooth upgrade path for users.
 - **Key Tasks:**
-  - Modify `@chonky/cli` to automatically detect and invoke the Rust compiler backend (via Node-API or subprocess).
+  - Modify `@chonkylang/cli` to automatically detect and invoke the Rust compiler backend (via Node-API or subprocess).
   - Write *Migration Guide from Phase 1 to Phase 2*, detailing configuration changes and potential breaking changes.
 - **Deliverables:** New version of CLI and build plugins, along with complete migration documentation.
 

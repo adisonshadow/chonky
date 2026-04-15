@@ -1,4 +1,4 @@
-import { defineRequirement } from '@chonky/runtime';
+import { defineRequirement } from '@chonkylang/runtime';
 
 export const addTodoRequirement = defineRequirement({
   id: 'REQ-TODO-ADD-01',

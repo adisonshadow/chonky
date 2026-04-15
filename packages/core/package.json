@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/core",
+  "name": "@chonkylang/core",
   "version": "0.1.1",
   "description": "Chonky core — unified entry, re-exports from transpiler and runtime",
   "main": "dist/index.js",
@@ -16,8 +16,8 @@
     "dist"
   ],
   "dependencies": {
-    "@chonky/runtime": "workspace:*",
-    "@chonky/transpiler": "workspace:*"
+    "@chonkylang/runtime": "workspace:*",
+    "@chonkylang/transpiler": "workspace:*"
   },
   "license": "MIT",
   "repository": {

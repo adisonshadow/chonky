@@ -11,9 +11,10 @@
     "test": "vitest run",
     "lint": "tsc --noEmit",
     "clean": "yarn workspaces foreach -A run clean",
-    "release:pack": "yarn build && yarn workspaces foreach -A --include '@chonky/*' npm pack",
-    "release:dry-run": "yarn build && yarn workspaces foreach -A --include '@chonky/*' --topological npm publish --access public --dry-run",
-    "release:publish": "yarn build && yarn workspaces foreach -A --include '@chonky/*' --topological npm publish --access public"
+    "release:pack": "sh -c 'test -f .npm-auth-token || (echo \"Missing .npm-auth-token (see docs/CONTRIBUTING.md).\" >&2; exit 1); TOKEN=$(head -n 1 .npm-auth-token | tr -d \"\\r\\n\"); test -n \"$TOKEN\" || (echo \"Empty .npm-auth-token (first line).\" >&2; exit 1); export YARN_NPM_AUTH_TOKEN=\"$TOKEN\"; yarn build && yarn workspaces foreach -A --include \"@chonkylang/*\" npm pack'",
+    "release:dry-run": "sh -c 'test -f .npm-auth-token || (echo \"Missing .npm-auth-token (see docs/CONTRIBUTING.md).\" >&2; exit 1); TOKEN=$(head -n 1 .npm-auth-token | tr -d \"\\r\\n\"); test -n \"$TOKEN\" || (echo \"Empty .npm-auth-token (first line).\" >&2; exit 1); export YARN_NPM_AUTH_TOKEN=\"$TOKEN\"; yarn build && yarn workspaces foreach -A --include \"@chonkylang/*\" --topological npm publish --access public --dry-run'",
+    "release:publish": "sh -c 'test -f .npm-auth-token || (echo \"Missing .npm-auth-token (see docs/CONTRIBUTING.md).\" >&2; exit 1); TOKEN=$(head -n 1 .npm-auth-token | tr -d \"\\r\\n\"); test -n \"$TOKEN\" || (echo \"Empty .npm-auth-token (first line).\" >&2; exit 1); export YARN_NPM_AUTH_TOKEN=\"$TOKEN\"; yarn build && yarn workspaces foreach -A --include \"@chonkylang/*\" --topological npm publish --access public'",
+    "release:publish:env": "yarn build && yarn workspaces foreach -A --include \"@chonkylang/*\" --topological npm publish --access public"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

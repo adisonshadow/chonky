@@ -2,7 +2,7 @@ import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { transformSync } from '@babel/core';
-import { loadChonkyConfig, preprocess, chonkyBabelPlugin } from '@chonky/transpiler';
+import { loadChonkyConfig, preprocess, chonkyBabelPlugin } from '@chonkylang/transpiler';
 
 export function registerBuildCommand(program: Command): void {
   program

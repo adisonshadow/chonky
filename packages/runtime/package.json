@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/runtime",
+  "name": "@chonkylang/runtime",
   "version": "0.1.1",
   "description": "Chonky browser runtime — metadata collection, verify, wrapper component",
   "main": "dist/index.js",

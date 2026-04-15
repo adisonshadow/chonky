@@ -383,7 +383,7 @@ module.exports = {
 
 ## 八、`Image` 组件与静默模式的联动
 
-`@chonky/ui` 提供的 `Image` 组件在构建时由 `@chonky/webpack-plugin`（或 Vite 插件）处理，其行为受静默模式配置影响：
+`@chonkylang/ui` 提供的 `Image` 组件在构建时由 `@chonkylang/webpack-plugin`（或 Vite 插件）处理，其行为受静默模式配置影响：
 
 ### 8.1 构建时行为
 
@@ -408,7 +408,7 @@ Webpack/Vite 插件扫描引用
 `Image` 组件在运行时根据浏览器支持情况和配置选择最优格式：
 
 ```tsx
-import { Image } from '@chonky/ui';
+import { Image } from '@chonkylang/ui';
 
 <Image src="/assets/hero.png" alt="Hero banner" />
 ```

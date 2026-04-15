@@ -102,14 +102,14 @@ Chonky 是 TypeScript 的超集，可以**零侵入**地添加到任何现有 Re
 npm create chonky-app@latest my-chonky-project
 
 # 或在现有项目中添加 Chonky 支持
-npm install @chonky/core @chonky/cli @chonky/runtime --save-dev
+npm install @chonkylang/core @chonkylang/cli @chonkylang/runtime --save-dev
 ```
 
 在 `tsconfig.json` 中添加一行配置即可启用：
 
 ```json
 {
-  "extends": "@chonky/tsconfig/base.json"
+  "extends": "@chonkylang/tsconfig/base.json"
 }
 ```
 

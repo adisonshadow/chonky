@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { ensureDir, resolveOutputDir } from '@chonky/transpiler';
+import { ensureDir, resolveOutputDir } from '@chonkylang/transpiler';
 
 interface DependencyNode {
   id: string;

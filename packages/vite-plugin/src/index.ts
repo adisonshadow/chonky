@@ -1,6 +1,6 @@
 import * as path from 'node:path';
-import { preprocess, chonkyBabelPlugin, loadChonkyConfig } from '@chonky/transpiler';
-import type { ChonkyConfig } from '@chonky/transpiler';
+import { preprocess, chonkyBabelPlugin, loadChonkyConfig } from '@chonkylang/transpiler';
+import type { ChonkyConfig } from '@chonkylang/transpiler';
 
 interface ChonkyVitePluginOptions {
   projectRoot?: string;

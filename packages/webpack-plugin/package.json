@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/webpack-plugin",
+  "name": "@chonkylang/webpack-plugin",
   "version": "0.1.1",
   "description": "Chonky Webpack plugin — build integration for Webpack projects",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "webpack": "^5.0.0"
   },
   "dependencies": {
-    "@chonky/transpiler": "workspace:*"
+    "@chonkylang/transpiler": "workspace:*"
   },
   "license": "MIT",
   "repository": {

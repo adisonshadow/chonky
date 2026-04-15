@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { fromSemanticView, loadChonkyConfig, chonkyBabelPlugin } from '@chonky/transpiler';
+import { fromSemanticView, loadChonkyConfig, chonkyBabelPlugin } from '@chonkylang/transpiler';
 
 export function registerRevertCommand(program: Command): void {
   program

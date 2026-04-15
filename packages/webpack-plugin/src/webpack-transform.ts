@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { preprocess, chonkyBabelPlugin } from '@chonky/transpiler';
+import { preprocess, chonkyBabelPlugin } from '@chonkylang/transpiler';
 
 /**
  * Standalone transform function for use in custom loader setups.

@@ -8,7 +8,7 @@ export {
   generateChonkyId,
   ensureDir,
   resolveOutputDir,
-} from '@chonky/transpiler';
+} from '@chonkylang/transpiler';
 
 export type {
   PreprocessResult,
@@ -35,7 +35,7 @@ export type {
   PreferredItem,
   AmbiguityViolation,
   AmbiguityReport,
-} from '@chonky/transpiler';
+} from '@chonkylang/transpiler';
 
 // Runtime — browser APIs
 export {
@@ -43,7 +43,7 @@ export {
   verify,
   ChonkyRenderer,
   _ChonkyWrapper,
-} from '@chonky/runtime';
+} from '@chonkylang/runtime';
 
 export type {
   ChonkyWrapperProps,
@@ -52,4 +52,4 @@ export type {
   RenderEvent,
   ComponentTreeNode,
   ChonkyRenderMeta,
-} from '@chonky/runtime';
+} from '@chonkylang/runtime';

@@ -1,4 +1,4 @@
-import { defineRequirement } from '@chonky/runtime';
+import { defineRequirement } from '@chonkylang/runtime';
 
 export const loginRequirement = defineRequirement({
   id: 'REQ-USER-LOGIN-01',

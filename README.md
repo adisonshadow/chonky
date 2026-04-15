@@ -102,14 +102,14 @@ Chonky is a superset of TypeScript and can be added to any existing React / Vue 
 npm create chonky-app@latest my-chonky-project
 
 # Or add Chonky support to an existing project
-npm install @chonky/core @chonky/cli @chonky/runtime --save-dev
+npm install @chonkylang/core @chonkylang/cli @chonkylang/runtime --save-dev
 ```
 
 Enable it by adding a single line to your `tsconfig.json`:
 
 ```json
 {
-  "extends": "@chonky/tsconfig/base.json"
+  "extends": "@chonkylang/tsconfig/base.json"
 }
 ```
 

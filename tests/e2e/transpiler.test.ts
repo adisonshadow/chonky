@@ -9,7 +9,7 @@ import {
   loadChonkyConfig,
   toSemanticView,
   fromSemanticView,
-} from '@chonky/transpiler';
+} from '@chonkylang/transpiler';
 
 const FIXTURES = path.resolve(__dirname, '../fixtures');
 
@@ -123,11 +123,11 @@ describe('Test 2: machine:assert full pipeline', () => {
     expect(fs.existsSync(testFile)).toBe(true);
 
     const testContent = fs.readFileSync(testFile, 'utf-8');
-    expect(testContent).toContain('@chonky-generated');
+    expect(testContent).toContain('@chonkylang-generated');
     expect(testContent).toContain('REQ-USER-LOGIN-01');
     expect(testContent).toContain('Valid login succeeds');
     expect(testContent).toContain('Empty username fails');
-    expect(testContent).toContain("from '@chonky/runtime/test'");
+    expect(testContent).toContain("from '@chonkylang/runtime/test'");
   });
 });
 
@@ -276,7 +276,7 @@ describe('Test 5: view / revert roundtrip', () => {
 describe('Test 6: CLI integration', () => {
   test('CLI creates all expected commands', async () => {
     // Import createCli dynamically to avoid full CLI bootstrap
-    const { createCli } = await import('@chonky/cli');
+    const { createCli } = await import('@chonkylang/cli');
     const cli = createCli();
 
     const commandNames = cli.commands.map((c) => c.name());

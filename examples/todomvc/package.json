@@ -10,14 +10,14 @@
     "chonky:build": "chonky build"
   },
   "dependencies": {
-    "@chonky/core": "workspace:*",
-    "@chonky/runtime": "workspace:*",
+    "@chonkylang/core": "workspace:*",
+    "@chonkylang/runtime": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@chonky/cli": "workspace:*",
-    "@chonky/vite-plugin": "workspace:^",
+    "@chonkylang/cli": "workspace:*",
+    "@chonkylang/vite-plugin": "workspace:^",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^5.8.0",
     "vite": "^8.0.8",

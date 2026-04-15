@@ -1,4 +1,4 @@
-import { defineRequirement } from '@chonky/runtime';
+import { defineRequirement } from '@chonkylang/runtime';
 
 export const filterTodoRequirement = defineRequirement({
   id: 'REQ-TODO-FILTER-01',

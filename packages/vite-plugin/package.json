@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/vite-plugin",
+  "name": "@chonkylang/vite-plugin",
   "version": "0.1.1",
   "description": "Chonky Vite plugin — build integration for Vite projects",
   "main": "dist/index.js",
@@ -25,7 +25,7 @@
     "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "dependencies": {
-    "@chonky/transpiler": "workspace:*"
+    "@chonkylang/transpiler": "workspace:*"
   },
   "license": "MIT",
   "repository": {

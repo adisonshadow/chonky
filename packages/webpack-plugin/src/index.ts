@@ -1,4 +1,4 @@
-import { loadChonkyConfig } from '@chonky/transpiler';
+import { loadChonkyConfig } from '@chonkylang/transpiler';
 
 interface ChonkyWebpackPluginOptions {
   projectRoot?: string;

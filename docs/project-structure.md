@@ -10,14 +10,14 @@
 ```
 Chonky/
 ├── packages/                 # 第一阶段 npm 包（Monorepo 子包）
-│   ├── core/                 # @chonky/core — 统一入口，聚合导出
-│   ├── transpiler/           # @chonky/transpiler — Babel/SWC 转译插件
-│   ├── runtime/              # @chonky/runtime — 浏览器运行时库
-│   ├── cli/                  # @chonky/cli — 命令行工具
-│   ├── devtools/             # @chonky/devtools — 浏览器开发者工具面板
-│   ├── ui/                   # @chonky/ui — 优化组件库（Image 等）
-│   ├── vite-plugin/          # @chonky/vite-plugin — Vite 构建插件
-│   └── webpack-plugin/       # @chonky/webpack-plugin — Webpack 构建插件
+│   ├── core/                 # @chonkylang/core — 统一入口，聚合导出
+│   ├── transpiler/           # @chonkylang/transpiler — Babel/SWC 转译插件
+│   ├── runtime/              # @chonkylang/runtime — 浏览器运行时库
+│   ├── cli/                  # @chonkylang/cli — 命令行工具
+│   ├── devtools/             # @chonkylang/devtools — 浏览器开发者工具面板
+│   ├── ui/                   # @chonkylang/ui — 优化组件库（Image 等）
+│   ├── vite-plugin/          # @chonkylang/vite-plugin — Vite 构建插件
+│   └── webpack-plugin/       # @chonkylang/webpack-plugin — Webpack 构建插件
 ├── crates/                   # 第二阶段 Rust 编译器（Cargo workspace）
 │   └── chonkyc/              # chonkyc 编译器二进制
 ├── examples/                 # 示例项目
@@ -46,7 +46,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/core` |
+| **包名** | `@chonkylang/core` |
 | **职责** | 统一入口包，聚合导出 transpiler、runtime 中的公共 API，便于用户一次安装 |
 | **里程碑** | 贯穿 1.2 – 1.4 |
 
@@ -54,7 +54,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/transpiler` |
+| **包名** | `@chonkylang/transpiler` |
 | **职责** | Babel/SWC 插件本体：识别并转换 `defineRequirement`、`machine:assert`、JSX 包裹等 Chonky 扩展语法 |
 | **里程碑** | 1.2 |
 | **关键产出** | 编译后标准 TS/JS 代码、`.chonky/requirements/*.json` 清单、`__tests__/*.test.ts` |
@@ -63,15 +63,15 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/runtime` |
-| **职责** | 浏览器端运行时：`ChonkyRenderer`（元数据收集）、`_ChonkyWrapper`（JSX 包裹组件）、`verify()` 断言函数、`@chonky/runtime/test` 测试适配层 |
+| **包名** | `@chonkylang/runtime` |
+| **职责** | 浏览器端运行时：`ChonkyRenderer`（元数据收集）、`_ChonkyWrapper`（JSX 包裹组件）、`verify()` 断言函数、`@chonkylang/runtime/test` 测试适配层 |
 | **里程碑** | 1.3 |
 
 #### `packages/cli/`
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/cli` |
+| **包名** | `@chonkylang/cli` |
 | **职责** | 命令行入口：`chonky init`、`chonky dev`、`chonky build`、`chonky graph`、`chonky optimize`、`chonky view`、`chonky revert` |
 | **里程碑** | 1.4、1.5 |
 
@@ -79,7 +79,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/devtools` |
+| **包名** | `@chonkylang/devtools` |
 | **职责** | 浏览器开发者工具面板扩展，可视化渲染元数据、依赖图谱、需求完成度 |
 | **里程碑** | 1.3 |
 
@@ -87,7 +87,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/ui` |
+| **包名** | `@chonkylang/ui` |
 | **职责** | 优化组件库：`Image` 组件（集成 sharp / CDN 参数自动处理）等 |
 | **里程碑** | 1.3 |
 
@@ -95,7 +95,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/vite-plugin` |
+| **包名** | `@chonkylang/vite-plugin` |
 | **职责** | Vite 构建集成：自动注册 transpiler、处理资源优化、注入运行时 |
 | **里程碑** | 1.4 |
 
@@ -103,7 +103,7 @@ Monorepo 中的所有可发布 npm 包均放在此目录下，每个子目录是
 
 | 项 | 说明 |
 | :--- | :--- |
-| **包名** | `@chonky/webpack-plugin` |
+| **包名** | `@chonkylang/webpack-plugin` |
 | **职责** | Webpack 构建集成：功能同 vite-plugin，适配 Webpack 生态 |
 | **里程碑** | 1.4 |
 

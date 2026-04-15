@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/transpiler",
+  "name": "@chonkylang/transpiler",
   "version": "0.1.1",
   "description": "Chonky Babel/SWC transpiler plugin — preprocessor + AST transforms",
   "main": "dist/index.js",

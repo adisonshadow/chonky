@@ -29,37 +29,37 @@
 
 - **目标：** 实现 Chonky 扩展语法的编译时转换，将 `.chonky.ts` / `.cts` 文件转换为标准 TypeScript 代码。
 - **关键任务：**
-  - 开发 `@chonky/babel-plugin` (或 SWC 插件)，识别并处理以下语法节点：
+  - 开发 `@chonkylang/babel-plugin` (或 SWC 插件)，识别并处理以下语法节点：
     - `defineRequirement(...)` → 剥离包装，输出纯净对象，并生成独立 JSON 清单文件。
     - `machine:assert for "ID" { ... }` → 转换为 Vitest/Jest 测试用例代码。
     - `with moduleCalls { ... }` → 保留为注释或元数据，供静态分析工具读取。
   - 实现 JSX 组件自动包裹逻辑，注入渲染元数据收集钩子（开发模式专用）。
   - 提供 Source Map 支持，确保编译后代码可调试。
-- **产出物：** `@chonky/transpiler` npm 包，包含插件本体及配套的类型定义。
+- **产出物：** `@chonkylang/transpiler` npm 包，包含插件本体及配套的类型定义。
 
 ##### 里程碑 1.3：运行时库与浏览器端基础设施
 
 - **目标：** 提供浏览器端运行所必需的基础功能，支撑元数据收集、验证执行及优化组件。
 - **关键任务：**
-  - 开发 `@chonky/runtime` 包，包含：
+  - 开发 `@chonkylang/runtime` 包，包含：
     - `ChonkyRenderer` 类：负责收集并维护 `__CHONKY_RENDER_META__` 数据。
     - `Image` 组件：集成资源优化决策逻辑，根据配置读取静默模式阈值。
     - `verify` 运行时辅助函数：用于开发环境下的断言执行。
   - 开发浏览器开发者工具面板（Chonky DevTools），可视化展示渲染元数据、依赖图谱及需求完成度。
-- **产出物：** `@chonky/runtime` 和 `@chonky/devtools` npm 包。
+- **产出物：** `@chonkylang/runtime` 和 `@chonkylang/devtools` npm 包。
 
 ##### 里程碑 1.4：CLI 工具与静态分析器
 
 - **目标：** 提供命令行入口，封装构建流程、依赖图生成及优化询问交互。
 - **关键任务：**
-  - 开发 `@chonky/cli`，提供以下命令：
+  - 开发 `@chonkylang/cli`，提供以下命令：
     - `chonky init`：交互式初始化 Chonky 项目（生成 `chonky.config.js`、`tsconfig` 扩展、目录结构及示例 `.req.ts` 文件），支持 AI Agent 以 `--yes` 静默模式直接调用。
     - `chonky dev`：启动开发服务器，注入运行时库并启用元数据收集。
     - `chonky build`：执行生产构建，自动剔除所有调试代码（Tree-Shaking）。
     - `chonky graph`：调用静态分析器（基于 TypeScript Compiler API 或 madge）生成模块依赖图 JSON。
     - `chonky optimize`：交互式扫描项目资源，按静默模式阈值询问并执行优化。
   - 集成 Webpack / Vite 插件，降低与主流构建工具的集成门槛。
-- **产出物：** `@chonky/cli` npm 包，以及对应的 Vite/Webpack 插件。
+- **产出物：** `@chonkylang/cli` npm 包，以及对应的 Vite/Webpack 插件。
 
 ##### 里程碑 1.5：语义化翻译视图（人类兜底机制）
 
@@ -113,7 +113,7 @@
 
 - **目标：** 将 Rust 编译器无缝接入现有的 CLI 工具和构建插件体系，确保用户平滑升级。
 - **关键任务：**
-  - 修改 `@chonky/cli`，使其能够自动检测并调用 Rust 编译器后端（通过 Node-API 或子进程）。
+  - 修改 `@chonkylang/cli`，使其能够自动检测并调用 Rust 编译器后端（通过 Node-API 或子进程）。
   - 编写《从第一阶段迁移至第二阶段指南》，说明配置变更及潜在破坏性变化。
 - **产出物：** 新版 CLI 与构建插件，以及完整的迁移文档。
 

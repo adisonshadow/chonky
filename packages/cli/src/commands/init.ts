@@ -21,7 +21,7 @@ const TEMPLATES: Record<string, TemplateConfig> = {
       'chonky.config.js': generateConfig,
       'tsconfig.json': generateTsConfig,
       'src/index.ts': () =>
-        "import { defineRequirement } from '@chonky/runtime';\n\nconsole.log('Hello from Chonky!');\n",
+        "import { defineRequirement } from '@chonkylang/runtime';\n\nconsole.log('Hello from Chonky!');\n",
     },
   },
 };
@@ -94,13 +94,13 @@ function generatePackageJson(projectName: string): string {
         test: 'vitest run',
       },
       dependencies: {
-        '@chonky/core': '^0.1.1',
-        '@chonky/runtime': '^0.1.1',
+        '@chonkylang/core': '^0.1.1',
+        '@chonkylang/runtime': '^0.1.1',
         react: '^19.0.0',
         'react-dom': '^19.0.0',
       },
       devDependencies: {
-        '@chonky/cli': '^0.1.1',
+        '@chonkylang/cli': '^0.1.1',
         typescript: '^5.8.0',
         vitest: '^3.0.0',
       },
@@ -111,7 +111,7 @@ function generatePackageJson(projectName: string): string {
 }
 
 function generateConfig(_projectName: string): string {
-  return `/** @type {import('@chonky/transpiler').ChonkyConfig} */
+  return `/** @type {import('@chonkylang/transpiler').ChonkyConfig} */
 module.exports = {
   verification: {
     strictBinding: false,
@@ -176,7 +176,7 @@ export function App() {
 }
 
 function generateSampleReq(_projectName: string): string {
-  return `import { defineRequirement } from '@chonky/runtime';
+  return `import { defineRequirement } from '@chonkylang/runtime';
 
 export const sampleRequirement = defineRequirement({
   id: 'REQ-SAMPLE-01',

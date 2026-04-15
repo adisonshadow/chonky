@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/cli",
+  "name": "@chonkylang/cli",
   "version": "0.1.1",
   "description": "Chonky CLI — init, dev, build, graph, optimize, view, revert",
   "main": "dist/index.js",
@@ -18,8 +18,8 @@
     "prepublishOnly": "yarn run build"
   },
   "dependencies": {
-    "@chonky/runtime": "workspace:*",
-    "@chonky/transpiler": "workspace:*",
+    "@chonkylang/runtime": "workspace:*",
+    "@chonkylang/transpiler": "workspace:*",
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "inquirer": "^13.4.1"

@@ -18,7 +18,7 @@ declare const window: {
 
 /**
  * Lightweight bridge between Chrome DevTools panel and the runtime.
- * Listens for postMessage from @chonky/runtime and provides
+ * Listens for postMessage from @chonkylang/runtime and provides
  * a command channel for DevTools to request data/actions.
  */
 export class DevToolsBridge {

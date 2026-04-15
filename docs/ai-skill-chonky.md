@@ -2,7 +2,7 @@
 name: chonky-development
 description: >-
   Guides installation, initialization, authoring, build integration, and testing for the Chonky
-  machine-first web language and monorepo. Use when working on Chonky, @chonky/* packages,
+  machine-first web language and monorepo. Use when working on Chonky, @chonkylang/* packages,
   defineRequirement, machine:assert, chonky CLI (init, dev, build, view, revert, graph, optimize),
   pm-requirement.json, Vite/Webpack plugins, or examples/todomvc.
 ---
@@ -26,7 +26,7 @@ Chonky is a TypeScript-oriented, **machine-first** web stack: structured require
 - **Install dependencies**: From the repository root, run `yarn install`.
 - **Do not add dependencies by hand-editing `package.json`**. Use:
   - Root dev deps: `yarn add -D <pkg> -w`
-  - A workspace package: `yarn workspace @chonky/<name> add [-D] <pkg>`
+  - A workspace package: `yarn workspace @chonkylang/<name> add [-D] <pkg>`
   This keeps the lockfile consistent.
 - **Build all packages**: `yarn build` (runs workspace builds in topological order).
 - **Tests at root**: `yarn test` (Vitest; includes `tests/e2e/` when configured).
@@ -35,7 +35,7 @@ See [project-structure.md](project-structure.md) for directory layout.
 
 ## Initialize an application project
 
-Use the CLI after installing `@chonky/cli` (globally or as a devDependency):
+Use the CLI after installing `@chonkylang/cli` (globally or as a devDependency):
 
 ```bash
 chonky init [project-name] [--template default|minimal] [--force]
@@ -44,13 +44,13 @@ chonky init [project-name] [--template default|minimal] [--force]
 - **`default`**: React + sample `defineRequirement` scaffold.
 - **`minimal`**: No UI shell; minimal TypeScript entry.
 
-Then install dependencies (`yarn install` or `npm install` per the generated project) and add `@chonky/core`, `@chonky/runtime`, and build plugins as needed.
+Then install dependencies (`yarn install` or `npm install` per the generated project) and add `@chonkylang/core`, `@chonkylang/runtime`, and build plugins as needed.
 
 A working reference app lives under [examples/todomvc](../examples/todomvc) (`chonky.config.js`, `pm-requirement.json`, requirements, and `machine:assert` samples).
 
 ## Configuration file
 
-Project root should include `chonky.config.js` exporting a `ChonkyConfig` object (see `@chonky/transpiler` types):
+Project root should include `chonky.config.js` exporting a `ChonkyConfig` object (see `@chonkylang/transpiler` types):
 
 - **`verification`**: e.g. `strictBinding` for requirement ID rules.
 - **`ambiguity`**: path to `pm-requirement.json`, `strictMode`, report output under `.chonky/`.
@@ -59,7 +59,7 @@ Project root should include `chonky.config.js` exporting a `ChonkyConfig` object
 Example shape (abbreviated):
 
 ```js
-/** @type {import('@chonky/transpiler').ChonkyConfig} */
+/** @type {import('@chonkylang/transpiler').ChonkyConfig} */
 module.exports = {
   verification: { strictBinding: true },
   ambiguity: {
@@ -76,12 +76,12 @@ module.exports = {
 
 ### `defineRequirement`
 
-- Import from `@chonky/runtime` (runtime is a no-op; manifests are emitted at build time).
+- Import from `@chonkylang/runtime` (runtime is a no-op; manifests are emitted at build time).
 - Use a stable requirement ID matching `REQ-<MODULE>-<SEQ>` (see [spec-structured-requirement-definition.md](spec-structured-requirement-definition.md)).
 - Keep **`id`**, **`triggers`**, and other fields as plain serializable data in the object literal.
 
 ```ts
-import { defineRequirement } from '@chonky/runtime';
+import { defineRequirement } from '@chonkylang/runtime';
 
 export const myReq = defineRequirement({
   id: 'REQ-EXAMPLE-01',
@@ -104,7 +104,7 @@ machine:assert for "REQ-EXAMPLE-01" {
 }
 ```
 
-Generated tests typically land next to the file under `__tests__/<REQ-ID>.test.ts` and import from `@chonky/runtime/test` (Vitest re-exports).
+Generated tests typically land next to the file under `__tests__/<REQ-ID>.test.ts` and import from `@chonkylang/runtime/test` (Vitest re-exports).
 
 ### Comments and copy
 
@@ -122,7 +122,7 @@ Generated tests typically land next to the file under `__tests__/<REQ-ID>.test.t
 | `chonky view <file>` | Human-readable “semantic view” of machine-oriented source |
 | `chonky revert <file>` | Reverse direction toward machine-oriented output (`--dry-run`, `--apply-babel`) |
 
-For app bundling, wire **`@chonky/vite-plugin`** or **`@chonky/webpack-plugin`** so transforms run in dev and production pipelines.
+For app bundling, wire **`@chonkylang/vite-plugin`** or **`@chonkylang/webpack-plugin`** so transforms run in dev and production pipelines.
 
 ## Ambiguity policy
 
@@ -132,7 +132,7 @@ Details: [spec-ambiguity-resolution-protocol.md](spec-ambiguity-resolution-proto
 
 ## Testing
 
-- **Generated tests**: Produced beside sources; use Vitest (`@chonky/runtime/test`).
+- **Generated tests**: Produced beside sources; use Vitest (`@chonkylang/runtime/test`).
 - **This monorepo**: `yarn test` at root; e2e coverage in `tests/e2e/`.
 - **Runtime helpers**: `verify()` for dev-time checks; render metadata via `ChonkyRenderer` / protocol in [spec-render-metadata-protocol.md](spec-render-metadata-protocol.md).
 

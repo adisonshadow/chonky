@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { toSemanticView } from '@chonky/transpiler';
+import { toSemanticView } from '@chonkylang/transpiler';
 
 export function registerViewCommand(program: Command): void {
   program

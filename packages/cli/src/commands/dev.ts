@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { loadChonkyConfig, preprocess } from '@chonky/transpiler';
+import { loadChonkyConfig, preprocess } from '@chonkylang/transpiler';
 
 export function registerDevCommand(program: Command): void {
   program
@@ -52,7 +52,7 @@ export function registerDevCommand(program: Command): void {
       }
 
       console.log('  Watching for file changes... (Ctrl+C to stop)\n');
-      console.log('  Note: Full dev server with HMR will be available via @chonky/vite-plugin.\n');
+      console.log('  Note: Full dev server with HMR will be available via @chonkylang/vite-plugin.\n');
 
       // Keep process alive
       await new Promise(() => {});

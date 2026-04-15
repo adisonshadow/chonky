@@ -203,7 +203,7 @@ REQ-CART-CHECKOUT-03
 .req.ts 源文件
     │
     ▼
-@chonky/babel-plugin 识别 defineRequirement() 调用
+@chonkylang/babel-plugin 识别 defineRequirement() 调用
     │
     ├──▶ 输出 1: 编译后 JS —— 剥离 defineRequirement 包装，保留纯对象 export
     │

@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { loadChonkyConfig, ensureDir, resolveOutputDir } from '@chonky/transpiler';
-import type { ChonkyConfig, SilentModeConfig } from '@chonky/transpiler';
+import { loadChonkyConfig, ensureDir, resolveOutputDir } from '@chonkylang/transpiler';
+import type { ChonkyConfig, SilentModeConfig } from '@chonkylang/transpiler';
 
 interface OptimizationSuggestion {
   type: string;

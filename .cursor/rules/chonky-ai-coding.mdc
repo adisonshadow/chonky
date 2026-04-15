@@ -25,14 +25,14 @@ This is a **monorepo**. See [`docs/project-structure.md`](../../docs/project-str
 
 | Path | Purpose |
 |------|---------|
-| `packages/core` | `@chonky/core` — unified entry, re-exports |
-| `packages/transpiler` | `@chonky/transpiler` — Babel/SWC compile plugin |
-| `packages/runtime` | `@chonky/runtime` — browser runtime (metadata, verify, wrapper) |
-| `packages/cli` | `@chonky/cli` — CLI commands (`init`, `dev`, `build`, `graph`, `optimize`, `view`, `revert`) |
-| `packages/devtools` | `@chonky/devtools` — browser DevTools panel |
-| `packages/ui` | `@chonky/ui` — optimized components (`Image`, etc.) |
-| `packages/vite-plugin` | `@chonky/vite-plugin` — Vite build integration |
-| `packages/webpack-plugin` | `@chonky/webpack-plugin` — Webpack build integration |
+| `packages/core` | `@chonkylang/core` — unified entry, re-exports |
+| `packages/transpiler` | `@chonkylang/transpiler` — Babel/SWC compile plugin |
+| `packages/runtime` | `@chonkylang/runtime` — browser runtime (metadata, verify, wrapper) |
+| `packages/cli` | `@chonkylang/cli` — CLI commands (`init`, `dev`, `build`, `graph`, `optimize`, `view`, `revert`) |
+| `packages/devtools` | `@chonkylang/devtools` — browser DevTools panel |
+| `packages/ui` | `@chonkylang/ui` — optimized components (`Image`, etc.) |
+| `packages/vite-plugin` | `@chonkylang/vite-plugin` — Vite build integration |
+| `packages/webpack-plugin` | `@chonkylang/webpack-plugin` — Webpack build integration |
 | `crates/chonkyc` | Phase-2 Rust compiler binary |
 | `examples/todomvc` | Chonky TodoMVC demo app |
 | `docs/` | Design docs, specs, roadmap |
@@ -59,7 +59,7 @@ yarn add <package>
 To add a dependency to a specific workspace package, use the `--cwd` flag or `-w` for root:
 
 ```bash
-yarn workspace @chonky/cli add commander inquirer
+yarn workspace @chonkylang/cli add commander inquirer
 yarn add -D typescript vitest -w   # root devDependency
 ```
 

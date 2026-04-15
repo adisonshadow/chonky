@@ -1,5 +1,5 @@
 {
-  "name": "@chonky/devtools",
+  "name": "@chonkylang/devtools",
   "version": "0.1.1",
   "description": "Chonky DevTools — browser extension panel for render metadata visualization",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
     "prepublishOnly": "yarn run build"
   },
   "dependencies": {
-    "@chonky/runtime": "workspace:*"
+    "@chonkylang/runtime": "workspace:*"
   },
   "license": "MIT",
   "repository": {

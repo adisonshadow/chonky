@@ -225,7 +225,7 @@ interface PreferredItem {
         {
           "type": "pattern",
           "target": "document\\.cookie",
-          "reason": "使用 @chonky/runtime 提供的安全 cookie 封装"
+          "reason": "使用 @chonkylang/runtime 提供的安全 cookie 封装"
         },
         {
           "type": "api",
@@ -332,7 +332,7 @@ module.exports = {
 
 ```
 ✖ [chonky/ambiguity] POLICY-SECURITY-001: Pattern "document.cookie" is excluded.
-  Reason: 使用 @chonky/runtime 提供的安全 cookie 封装
+  Reason: 使用 @chonkylang/runtime 提供的安全 cookie 封装
   File: src/utils/analytics.ts:8:1
   Build aborted.
 ```

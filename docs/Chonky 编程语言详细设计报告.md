@@ -27,7 +27,7 @@ Chonky 的设计完全倒置传统优先级，遵循三大原则：
 
 **第一阶段（当前阶段）：基于 Babel/SWC 插件的 npm 包实现**
 - **核心目标：** 在不修改 TypeScript 编译器源码的前提下，快速落地 Chonky 的语法扩展与元数据收集功能。
-- **技术方案：** 发布一个名为 `@chonky/core` 的 npm 包，内部集成：
+- **技术方案：** 发布一个名为 `@chonkylang/core` 的 npm 包，内部集成：
     1.  **Babel 插件 / SWC 插件：** 用于识别并转译 `.chonky.ts` 或 `.cts` 文件中的特殊语法（如 `machine:assert`、`defineRequirement`）。将新语法编译为可在现有浏览器/Node.js 运行的等效 TypeScript 代码。
     2.  **运行时库：** 提供 `__CHONKY_RENDER_META__` 收集器、`Image` 优化组件等浏览器端辅助功能。
     3.  **CLI 工具：** 提供 `chonky dev` 和 `chonky build` 命令，封装 Webpack/Vite 插件，自动处理文件转译和元数据输出。
@@ -41,7 +41,7 @@ Chonky 的设计完全倒置传统优先级，遵循三大原则：
 
 ### **二、 第一阶段：基于 npm 包的核心语法实现**
 
-本章节定义的所有特性，将通过 `@chonky/babel-plugin` 在构建阶段转换。
+本章节定义的所有特性，将通过 `@chonkylang/babel-plugin` 在构建阶段转换。
 
 #### 2.1 结构化需求定义语言 (Structured Requirement Definition)
 **目的：** 废除自然语言注释描述功能，强制使用 JSON-Schema 定义功能逻辑。
@@ -76,7 +76,7 @@ machine:assert for "REQ-USER-LOGIN-01" {
 }
 
 // 编译输出 (由 Babel 插件生成到 __tests__ 目录)
-import { test, expect } from '@chonky/runtime/test';
+import { test, expect } from '@chonkylang/runtime/test';
 test('REQ-USER-LOGIN-01 | Password too short', () => {
   // 转换后的断言逻辑
 });
@@ -84,12 +84,12 @@ test('REQ-USER-LOGIN-01 | Password too short', () => {
 
 #### 2.3 模块依赖与并发安全图谱
 **实现方案：**
-- **第一阶段实现：** 不依赖 `moduleCalls` 手动声明。`@chonky/cli` 命令 `chonky graph` 使用 `madge` 或 TypeScript Compiler API 对项目进行静态分析，自动生成依赖图 JSON 文件。
+- **第一阶段实现：** 不依赖 `moduleCalls` 手动声明。`@chonkylang/cli` 命令 `chonky graph` 使用 `madge` 或 TypeScript Compiler API 对项目进行静态分析，自动生成依赖图 JSON 文件。
 - **并发标记：** `@concurrencySafe` 仅作为代码注释保留，在第一阶段不进行强校验，仅用于生成图谱时的元数据标注。
 
 #### 2.4 渲染元数据协议 (Render Metadata Protocol)
 **实现方案：**
-通过 `@chonky/runtime` 提供的 Babel 插件，自动为所有 JSX 组件包裹高阶函数，在开发环境下注入 `data-chonky-id` 和上报逻辑。
+通过 `@chonkylang/runtime` 提供的 Babel 插件，自动为所有 JSX 组件包裹高阶函数，在开发环境下注入 `data-chonky-id` 和上报逻辑。
 
 ```typescript
 // 开发者代码
@@ -112,9 +112,9 @@ Babel 插件在编译时会读取 `pm-requirement.json` 列表。当检测到代
 由于第一阶段不涉及 Rust 编译器，性能优化主要通过 **运行时库** 和 **构建工具链配置** 实现。
 
 #### 3.1 资源引用自动决策框架
-**实现方案：** 提供 `@chonky/ui` 组件库封装。
+**实现方案：** 提供 `@chonkylang/ui` 组件库封装。
 - `Image` 组件内部集成 `sharp` (服务端构建时) 或调用图片 CDN 参数，自动处理格式转换。
-- 构建时通过 `@chonky/webpack-plugin` 扫描图片引用，输出 WebP 版本并重写 HTML。
+- 构建时通过 `@chonkylang/webpack-plugin` 扫描图片引用，输出 WebP 版本并重写 HTML。
 
 #### 3.2 交互式决策询问机制与静默模式
 **实现方案：**
@@ -140,7 +140,7 @@ module.exports = {
 | **环节** | **人类职责 (Chonky 模式)** | **机器职责 (AI Agent + npm 包工具链)** |
 | :--- | :--- | :--- |
 | **代码编写** | **禁止直接编写逻辑代码**。紧急情况下通过 `chonky view` 命令查看语义化翻译视图临时介入。 | Babel 插件转换代码，AI Agent 生成业务逻辑。 |
-| **资源处理** | 回答“是/否”或选择“性能优先/质量优先”。 | `@chonky/webpack-plugin` 执行格式转换。 |
+| **资源处理** | 回答“是/否”或选择“性能优先/质量优先”。 | `@chonkylang/webpack-plugin` 执行格式转换。 |
 | **调试** | 描述现象：“登录失败了”。 | 读取 `window.__CHONKY_LOGS__` 和断言报告。 |
 
 ---
