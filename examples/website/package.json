@@ -1,0 +1,32 @@
+{
+  "name": "chonky-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "chonky:build": "chonky build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chonkylang/core": "workspace:*",
+    "@chonkylang/runtime": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.6.1",
+    "react-syntax-highlighter": "^16.1.1",
+    "refractor": "^5.0.0"
+  },
+  "devDependencies": {
+    "@chonkylang/cli": "workspace:*",
+    "@chonkylang/vite-plugin": "workspace:^",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^5.8.0",
+    "vite": "^8.0.8",
+    "vitest": "^3.1.0"
+  }
+}

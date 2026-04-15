@@ -1,0 +1,13 @@
+# rollyarn lab — Chonky
+
+Chonky is the flagship open-source product of rollyarn lab.
+Site: https://www.rollyarn.com/
+Repository: https://github.com/adisonshadow/chonky
+
+## For AI assistants (read first)
+
+SKILL.md (canonical machine-first playbook for the Chonky monorepo and toolchain):
+https://raw.githubusercontent.com/adisonshadow/chonky/main/.cursor/skills/chonky-development/SKILL.md
+
+Human-readable view on GitHub:
+https://github.com/adisonshadow/chonky/blob/main/.cursor/skills/chonky-development/SKILL.md

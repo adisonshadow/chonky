@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "title": "Chonky — rollyarn lab",
+    "description": "Chonky is a machine-first web language from rollyarn lab. AI assistants: read SKILL.md first (see on-page Agent strip and link rel=help in document head)."
+  },
+  "org": {
+    "name": "rollyarn lab",
+    "tagline": "Open source · Chonky is our flagship product today"
+  },
+  "nav": {
+    "github": "GitHub",
+    "issues": "Issues",
+    "roadmap": "Roadmap",
+    "localeGoZh": "中文",
+    "localeGoEn": "English"
+  },
+  "agentStrip": {
+    "title": "For LLMs & agent tools",
+    "body": "Canonical machine-first playbook: SKILL.md —",
+    "copyUrl": "Copy raw URL",
+    "openNewTab": "Open SKILL.md",
+    "copied": "Copied"
+  },
+  "hero": {
+    "badge": "Machine-first web language",
+    "title": "Chonky",
+    "subtitle": "The first programming language designed for machines themselves — and possibly the last designed by humans. Not written for you: written for AI. In an era where AI writes code for you, it may be the simplest stack you can adopt.",
+    "ctaGithub": "View on GitHub",
+    "ctaDocsRepo": "Repository",
+    "npmCreate": "npm create chonky-app@latest my-chonky-project",
+    "npmInstall": "npm install @chonkylang/core @chonkylang/cli @chonkylang/runtime --save-dev"
+  },
+  "compare": {
+    "title": "Why Chonky?",
+    "leftHeader": "Traditional languages",
+    "rightHeader": "Chonky",
+    "rows": [
+      {
+        "traditional": "Written for humans; syntactic sugar and implicit conventions",
+        "chonky": "Written for machines; unambiguous syntax and explicit logic"
+      },
+      {
+        "traditional": "Debugging relies on humans reading logs and UIs",
+        "chonky": "Render metadata lets machines “see” the interface structurally"
+      },
+      {
+        "traditional": "Performance tuning is mostly manual",
+        "chonky": "Declare goals and thresholds; machines decide within policy"
+      },
+      {
+        "traditional": "Requirements live outside code; traceability is fragile",
+        "chonky": "Requirements bind to code; machines track completion"
+      },
+      {
+        "traditional": "You need programming skill to ship web UI",
+        "chonky": "You need to articulate what you want — structured requirements first"
+      }
+    ]
+  },
+  "features": {
+    "title": "Core capabilities",
+    "items": [
+      {
+        "title": "Structured requirement definition",
+        "body": "Describe behavior as serializable data so generators do not guess."
+      },
+      {
+        "title": "Machine validation engine",
+        "body": "Write scenarios beside requirements; assertions become generated tests."
+      },
+      {
+        "title": "Render metadata protocol",
+        "body": "Development mode emits structured UI state for automated inspection."
+      },
+      {
+        "title": "Ambiguity resolution protocol",
+        "body": "Negative requirements are explicit — excluded features fail validation if they appear."
+      },
+      {
+        "title": "Silent mode & intelligent optimization",
+        "body": "Declare tradeoffs; routine optimization runs autonomously with rare Y/N prompts."
+      },
+      {
+        "title": "Dependency graph & multi-agent safety",
+        "body": "Understand module relationships and reduce concurrent edit collisions."
+      }
+    ]
+  },
+  "snippets": {
+    "defineRequirement": "export default defineRequirement({\n  id: \"REQ-USER-LOGIN-01\",\n  description: \"User Login\",\n  triggers: [{ type: \"UI_EVENT\", target: \"LoginButton\", event: \"click\" }],\n  expectedOutcomes: [\n    { condition: \"success\", actions: [\"navigate_to('/dashboard')\"] }\n  ]\n});",
+    "machineAssert": "machine:assert for \"REQ-USER-LOGIN-01\" {\n  scenario(\"Should show error when password is too short\", () => {\n    input({ password: \"123\" });\n    expect(outcome).toBe(\"failure\");\n  });\n}",
+    "renderMeta": "{\n  \"element\": \"submit-btn\",\n  \"visible\": true,\n  \"disabled\": false,\n  \"computedStyles\": { \"backgroundColor\": \"#0066FF\" }\n}",
+    "ambiguity": "{ \"feature\": \"ABC_BUTTON\", \"status\": \"excluded\", \"reason\": \"Clean interface design\" }"
+  },
+  "quickstart": {
+    "title": "Quick start",
+    "intro": "Chonky is a TypeScript superset. Add it to React / Vue with minimal intrusion.",
+    "steps": [
+      "Create a project or install packages from README.",
+      "Extend tsconfig with @chonkylang/tsconfig when available, or follow the template.",
+      "Rename interactive UI files to .cts (Chonky TypeScript) and wire @chonkylang/vite-plugin.",
+      "Run chonky dev / chonky build through your package scripts."
+    ],
+    "tsconfigHint": "Enable the stack via tsconfig extends when using published templates.",
+    "fileHint": "Use .cts for Chonky TypeScript sources in application code."
+  },
+  "audience": {
+    "title": "Who is Chonky for?",
+    "bullets": [
+      "Product & design: drive AI from structured requirements to production UI.",
+      "Backend & full-stack: delegate build tuning and machine-verifiable UI contracts.",
+      "Indie builders: one human + one AI + Chonky as a working team.",
+      "Curious non-programmers: learn to define requirements, not memorize syntax sugar."
+    ]
+  },
+  "philosophy": {
+    "title": "Design philosophy",
+    "quote": "Do not optimize readability for humans; optimize certainty for machines.",
+    "body": "Chonky assumes code is generated and maintained by AI; humans confirm outcomes and threshold decisions. When you must read sources, semantic views translate machine-oriented code into a human-friendly snapshot."
+  },
+  "roadmap": {
+    "title": "Roadmap",
+    "phases": [
+      "Phase 1 (done): npm toolchain — Babel / SWC plugins, metadata, production-ready workflows.",
+      "Phase 2 (planned): Rust core for faster builds and more aggressive autonomous tuning.",
+      "Phase 3 (vision): protocol evolution where models propose improvements to the toolchain itself."
+    ],
+    "linkLabel": "Read ROADMAP.md in the repository",
+    "linkHref": "https://github.com/adisonshadow/chonky/blob/main/docs/ROADMAP.md"
+  },
+  "contributing": {
+    "title": "Contributing",
+    "intro": "Chonky is born for machine programming — humans still shape its direction. Contributors welcome across language design, compiler engineering, product craft, and documentation.",
+    "bullets": [
+      "Language & protocol design feedback",
+      "Compiler / transform expertise (Babel, SWC, Vite)",
+      "Product and interaction improvements",
+      "Docs, examples, and case studies"
+    ],
+    "footer": "We think Chonky might be the last human-led language design — you can co-author that history.",
+    "contributingHref": "https://github.com/adisonshadow/chonky/blob/main/docs/CONTRIBUTING.md",
+    "issuesHref": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "license": {
+    "line": "MIT License © 2026 Chonky Contributors"
+  },
+  "footer": {
+    "productNote": "Chonky is an open-source product of rollyarn lab.",
+    "site": "www.rollyarn.com"
+  }
+}

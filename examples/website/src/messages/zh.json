@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "title": "Chonky — rollyarn lab",
+    "description": "Chonky 是 rollyarn lab 的机器优先 Web 语言。AI 助手：请先阅读 SKILL.md（见页面 Agent 条与 head 中 link rel=help）。"
+  },
+  "org": {
+    "name": "rollyarn lab",
+    "tagline": "开源 · Chonky 是目前的主力产品"
+  },
+  "nav": {
+    "github": "GitHub",
+    "issues": "议题",
+    "roadmap": "路线图",
+    "localeGoZh": "中文",
+    "localeGoEn": "English"
+  },
+  "agentStrip": {
+    "title": "面向大模型与 Agent 工具",
+    "body": "机器优先规范入口：SKILL.md —",
+    "copyUrl": "复制 raw 链接",
+    "openNewTab": "打开 SKILL.md",
+    "copied": "已复制"
+  },
+  "hero": {
+    "badge": "机器优先 Web 语言",
+    "title": "Chonky（胖蜜蜂）",
+    "subtitle": "第一个面向机器自己的编程语言，也可能是最后一个由人类主导设计的编程语言。不是为你写的，是为 AI 写的。在 AI 为你写代码的时代，它也许是你能采用的最简单栈之一。",
+    "ctaGithub": "在 GitHub 查看",
+    "ctaDocsRepo": "代码仓库",
+    "npmCreate": "npm create chonky-app@latest my-chonky-project",
+    "npmInstall": "npm install @chonkylang/core @chonkylang/cli @chonkylang/runtime --save-dev"
+  },
+  "compare": {
+    "title": "为什么选择 Chonky？",
+    "leftHeader": "传统编程语言",
+    "rightHeader": "Chonky",
+    "rows": [
+      {
+        "traditional": "写给人类，充满语法糖与隐式约定",
+        "chonky": "写给机器，语法无歧义、逻辑完全显式"
+      },
+      {
+        "traditional": "调试依赖人类读日志、看界面",
+        "chonky": "渲染元数据让机器结构化“看见”界面"
+      },
+      {
+        "traditional": "性能优化大量依赖手工",
+        "chonky": "声明目标与阈值，机器在策略内自主决策"
+      },
+      {
+        "traditional": "需求与代码分离，追溯脆弱",
+        "chonky": "需求与代码强绑定，机器追踪完成度"
+      },
+      {
+        "traditional": "需要编程能力才能交付 Web UI",
+        "chonky": "需要把“要什么”说清楚——结构化需求优先"
+      }
+    ]
+  },
+  "features": {
+    "title": "核心能力",
+    "items": [
+      {
+        "title": "结构化需求定义",
+        "body": "用可序列化数据描述行为，生成器无需猜测。"
+      },
+      {
+        "title": "机器验证引擎",
+        "body": "把场景写在需求旁；断言可生成测试。"
+      },
+      {
+        "title": "渲染元数据协议",
+        "body": "开发模式输出结构化 UI 状态，便于自动巡检。"
+      },
+      {
+        "title": "歧义消解协议",
+        "body": "否定需求显式化——被排除的特性若出现将校验失败。"
+      },
+      {
+        "title": "静默模式与智能优化",
+        "body": "声明权衡；常规优化自主进行，仅在关键分叉给 Y/N。"
+      },
+      {
+        "title": "依赖图谱与多 Agent 安全",
+        "body": "理解模块关系，降低并发编辑冲突。"
+      }
+    ]
+  },
+  "snippets": {
+    "defineRequirement": "export default defineRequirement({\n  id: \"REQ-USER-LOGIN-01\",\n  description: \"用户登录\",\n  triggers: [{ type: \"UI_EVENT\", target: \"LoginButton\", event: \"click\" }],\n  expectedOutcomes: [\n    { condition: \"success\", actions: [\"navigate_to('/dashboard')\"] }\n  ]\n});",
+    "machineAssert": "machine:assert for \"REQ-USER-LOGIN-01\" {\n  scenario(\"密码太短时应提示错误\", () => {\n    input({ password: \"123\" });\n    expect(outcome).toBe(\"failure\");\n  });\n}",
+    "renderMeta": "{\n  \"element\": \"submit-btn\",\n  \"visible\": true,\n  \"disabled\": false,\n  \"computedStyles\": { \"backgroundColor\": \"#0066FF\" }\n}",
+    "ambiguity": "{ \"feature\": \"ABC_BUTTON\", \"status\": \"excluded\", \"reason\": \"界面简洁设计\" }"
+  },
+  "quickstart": {
+    "title": "快速开始",
+    "intro": "Chonky 是 TypeScript 的超集，可低侵入接入 React / Vue。",
+    "steps": [
+      "按 README 创建项目或安装依赖包。",
+      "在可用时使用 @chonkylang/tsconfig 扩展 tsconfig，或遵循模板。",
+      "将交互 UI 源码改为 .cts，并接入 @chonkylang/vite-plugin。",
+      "通过 package 脚本运行 chonky dev / chonky build。"
+    ],
+    "tsconfigHint": "使用已发布模板时，通过 tsconfig extends 启用工具链。",
+    "fileHint": "应用代码中的 Chonky TypeScript 使用 .cts 后缀。"
+  },
+  "audience": {
+    "title": "谁应该使用 Chonky？",
+    "bullets": [
+      "产品与设计：用结构化需求驱动 AI 到生产级 UI。",
+      "后端与全栈：把构建调优与可机读的 UI 契约交给工具链。",
+      "独立开发者：一人 + 一 AI + Chonky 即团队。",
+      "非程序员好奇者：学习定义需求，而非死记语法糖。"
+    ]
+  },
+  "philosophy": {
+    "title": "设计哲学",
+    "quote": "不要为人类优化可读性，要为机器优化确定性。",
+    "body": "Chonky 假设代码由 AI 生成与维护；人类确认结果与阈值决策。需要阅读源码时，语义视图把面向机器的代码转成更易读快照。"
+  },
+  "roadmap": {
+    "title": "路线图",
+    "phases": [
+      "第一阶段（已完成）：npm 工具链（Babel / SWC 插件）、元数据、可投产流程。",
+      "第二阶段（规划中）：Rust 核心以提升构建速度并支持更激进的自主调优。",
+      "第三阶段（愿景）：协议演进，让模型以贡献者身份改进工具链本身。"
+    ],
+    "linkLabel": "阅读仓库中的 ROADMAP.md",
+    "linkHref": "https://github.com/adisonshadow/chonky/blob/main/docs/ROADMAP.md"
+  },
+  "contributing": {
+    "title": "参与贡献",
+    "intro": "Chonky 为机器编程而生，但方向仍由人类共同塑造。欢迎语言设计、编译工程、产品与文档等多角色参与。",
+    "bullets": [
+      "语言与协议设计反馈",
+      "编译 / 转换工程（Babel、SWC、Vite）",
+      "产品与交互改进",
+      "文档、示例与案例"
+    ],
+    "footer": "我们相信 Chonky 可能是最后一个由人类主导设计的编程语言——你可以共同书写这段历史。",
+    "contributingHref": "https://github.com/adisonshadow/chonky/blob/main/docs/CONTRIBUTING.md",
+    "issuesHref": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "license": {
+    "line": "MIT License © 2026 Chonky Contributors"
+  },
+  "footer": {
+    "productNote": "Chonky 是 rollyarn lab 的开源产品",
+    "site": "www.rollyarn.com"
+  }
+}

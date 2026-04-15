@@ -6,8 +6,6 @@
 
 [English](README.md) · **简体中文**
 
-**官方网站：** [www.rollyarn.com](https://www.rollyarn.com)
-
 Chonky（读音/ˈtʃɒŋki/）是第一个面向**机器自己**的编程语言，也可能是最后一个由**人类主导设计**的编程语言。
 
 Chonky 不是为你写的，是为 AI 写的。  

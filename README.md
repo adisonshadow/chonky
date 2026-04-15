@@ -6,8 +6,6 @@
 
 **English** · [简体中文](README.zh-CN.md)
 
-**website:** [www.rollyarn.com](https://www.rollyarn.com)
-
 The first programming language designed **for machines themselves**, and possibly the last programming language **designed by humans**.
 
 Chonky is not written for you. It is written for AI.  
