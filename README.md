@@ -2,9 +2,11 @@
   <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="200" />
 </p>
 
-# 🐝 Chonky (The Chubby Bee)
+# 🐝 Chonky 
 
 **English** · [简体中文](README.zh-CN.md)
+
+**website:** [www.rollyarn.com](https://www.rollyarn.com)
 
 The first programming language designed **for machines themselves**, and possibly the last programming language **designed by humans**.
 
