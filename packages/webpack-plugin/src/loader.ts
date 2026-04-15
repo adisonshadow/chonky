@@ -1,12 +1,13 @@
-import { chonkyWebpackLoader } from './index';
-
 interface LoaderContext {
   resourcePath: string;
   getOptions: () => { projectRoot: string; mode: string };
   async: () => (err: Error | null, code?: string, map?: unknown) => void;
 }
 
+type IndexModule = typeof import('./index');
+
 module.exports = function chonkyLoader(this: LoaderContext, source: string) {
+  const { chonkyWebpackLoader } = require('./index') as IndexModule;
   const callback = this.async();
   const options = this.getOptions();
   const filename = this.resourcePath;

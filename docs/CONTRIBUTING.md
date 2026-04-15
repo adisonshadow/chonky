@@ -27,7 +27,7 @@ Use clear, imperative subject lines (e.g. `fix(cli): handle missing config`). Bo
 
 ## Publishing to npm (maintainers)
 
-1. Ensure you are logged in: `npm login` (or configure a token per [npm token docs](https://docs.npmjs.com/cli/v9/commands/npm-login)).
+1. **Yarn 4 does not reuse `npm login` for `yarn npm publish`.** From the monorepo root, run **`yarn npm login`** (same browser/OTP flow as npm) so Yarn stores a token for `npmPublishRegistry`. If you only run `npm login`, you may still see **YN0033: No authentication configured for request** when running `yarn release:publish`. Alternatively set a token per [npm token docs](https://docs.npmjs.com/cli/v9/commands/npm-login) using `yarn config` (do not commit secrets).
 2. The `@chonky` scope must exist under the publishing account or org on [npmjs.com](https://www.npmjs.com/).
 3. From the monorepo root: `yarn release:dry-run` then `yarn release:publish`. Yarn rewrites `workspace:*` dependencies to concrete versions in the published tarballs. Packages publish in topological order.
 4. Each workspace runs `prepublishOnly` to rebuild `dist/` before pack.

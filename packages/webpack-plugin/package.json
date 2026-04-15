@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --dts",
+    "build": "tsup src/index.ts --format cjs --dts --external ./loader && tsup src/loader.ts --format cjs --no-dts --no-clean --external ./index",
     "clean": "rm -rf dist",
     "test": "vitest run",
     "prepublishOnly": "yarn run build"
