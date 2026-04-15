@@ -1,6 +1,6 @@
 {
   "name": "@chonky/transpiler",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky Babel/SWC transpiler plugin — preprocessor + AST transforms",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -18,12 +18,33 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "clean": "rm -rf dist",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/transpiler"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/transpiler#readme",
+  "keywords": [
+    "chonky",
+    "babel",
+    "transpiler",
+    "typescript",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/generator": "^7.29.1",

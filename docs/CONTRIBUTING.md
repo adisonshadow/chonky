@@ -25,6 +25,13 @@ Chonky is a **machine-first** language and toolchain: contributions should prese
 
 Use clear, imperative subject lines (e.g. `fix(cli): handle missing config`). Bodies are welcome for non-obvious rationale.
 
+## Publishing to npm (maintainers)
+
+1. Ensure you are logged in: `npm login` (or configure a token per [npm token docs](https://docs.npmjs.com/cli/v9/commands/npm-login)).
+2. The `@chonky` scope must exist under the publishing account or org on [npmjs.com](https://www.npmjs.com/).
+3. From the monorepo root: `yarn release:dry-run` then `yarn release:publish`. Yarn rewrites `workspace:*` dependencies to concrete versions in the published tarballs. Packages publish in topological order.
+4. Each workspace runs `prepublishOnly` to rebuild `dist/` before pack.
+
 ## Security
 
 Do not report security issues in public issues. Use the repository’s **Security** tab or the maintainers’ private disclosure channel if one is published there.

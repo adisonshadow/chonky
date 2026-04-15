@@ -1,4 +1,5 @@
 # Dependencies
+*.tgz
 node_modules/
 
 # Build outputs

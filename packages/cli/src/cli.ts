@@ -7,7 +7,7 @@ import { registerOptimizeCommand } from './commands/optimize';
 import { registerViewCommand } from './commands/view';
 import { registerRevertCommand } from './commands/revert';
 
-export const CLI_VERSION = '0.1.0';
+export const CLI_VERSION = '0.1.1';
 
 export function createCli(): Command {
   const program = new Command();

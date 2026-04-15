@@ -1,6 +1,6 @@
 {
   "name": "@chonky/vite-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky Vite plugin — build integration for Vite projects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -18,7 +18,8 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "clean": "rm -rf dist",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
   },
   "peerDependencies": {
     "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -27,6 +28,25 @@
     "@chonky/transpiler": "workspace:*"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/vite-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/vite-plugin#readme",
+  "keywords": [
+    "chonky",
+    "vite",
+    "plugin",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",

@@ -94,13 +94,13 @@ function generatePackageJson(projectName: string): string {
         test: 'vitest run',
       },
       dependencies: {
-        '@chonky/core': '^0.1.0',
-        '@chonky/runtime': '^0.1.0',
+        '@chonky/core': '^0.1.1',
+        '@chonky/runtime': '^0.1.1',
         react: '^19.0.0',
         'react-dom': '^19.0.0',
       },
       devDependencies: {
-        '@chonky/cli': '^0.1.0',
+        '@chonky/cli': '^0.1.1',
         typescript: '^5.8.0',
         vitest: '^3.0.0',
       },

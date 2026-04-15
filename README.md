@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="168" />
+  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="200" />
 </p>
 
 # 🐝 Chonky (The Chubby Bee)
@@ -139,8 +139,9 @@ Chonky's code is generated and maintained by AI, with humans intervening only at
 
 ## 🗺️ Roadmap
 
-Chonky is currently in **Phase 1**: Providing complete syntax extensions and metadata capabilities based on npm packages (Babel / SWC plugins), ready for immediate production use.  
-In the future, Phase 2 will refactor the compiler core in Rust, achieving over 10x compilation speed improvement and enabling more aggressive autonomous performance tuning (automatic WebAssembly splitting, etc.).
+- **Phase 1 (completed)**: Full syntax extensions and metadata via npm packages (Babel / SWC plugins); production-ready.
+- **Phase 2 (planned)**: Rust compiler core for 10x+ build speed and more aggressive autonomous tuning (e.g. automatic WebAssembly splitting).
+- **Phase 3 (vision)**: **Built-in evolution of the Chonky protocol**—large language models may act as **Contributors**, automatically proposing optimization strategies that evolve alongside the toolchain, ambiguity resolution, and silent-mode policies.
 
 For the full roadmap, please visit [ROADMAP.md](./docs/ROADMAP.md).
 

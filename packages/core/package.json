@@ -1,6 +1,6 @@
 {
   "name": "@chonky/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky core — unified entry, re-exports from transpiler and runtime",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -15,16 +15,36 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "clean": "rm -rf dist",
-    "test": "vitest run"
-  },
   "dependencies": {
     "@chonky/runtime": "workspace:*",
     "@chonky/transpiler": "workspace:*"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/core#readme",
+  "keywords": [
+    "chonky",
+    "typescript",
+    "requirements",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "clean": "rm -rf dist",
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
+  },
   "devDependencies": {
     "tsup": "^8.5.1"
   }

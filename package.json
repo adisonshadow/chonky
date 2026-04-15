@@ -10,7 +10,10 @@
     "build": "yarn workspaces foreach -A --topological run build",
     "test": "vitest run",
     "lint": "tsc --noEmit",
-    "clean": "yarn workspaces foreach -A run clean"
+    "clean": "yarn workspaces foreach -A run clean",
+    "release:pack": "yarn build && yarn workspaces foreach -A --include '@chonky/*' npm pack",
+    "release:dry-run": "yarn build && yarn workspaces foreach -A --include '@chonky/*' --topological npm publish --access public --dry-run",
+    "release:publish": "yarn build && yarn workspaces foreach -A --include '@chonky/*' --topological npm publish --access public"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

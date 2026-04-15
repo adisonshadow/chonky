@@ -1,6 +1,6 @@
 {
   "name": "@chonky/webpack-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky Webpack plugin — build integration for Webpack projects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,8 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs --dts",
     "clean": "rm -rf dist",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
   },
   "peerDependencies": {
     "webpack": "^5.0.0"
@@ -25,6 +26,25 @@
     "@chonky/transpiler": "workspace:*"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/webpack-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/webpack-plugin#readme",
+  "keywords": [
+    "chonky",
+    "webpack",
+    "plugin",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "tsup": "^8.5.1"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@chonky/runtime",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky browser runtime — metadata collection, verify, wrapper component",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -23,12 +23,32 @@
   "scripts": {
     "build": "tsup src/index.ts src/test.ts --format cjs,esm --dts",
     "clean": "rm -rf dist",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/runtime"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/runtime#readme",
+  "keywords": [
+    "chonky",
+    "react",
+    "runtime",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "react": "^19.2.5",

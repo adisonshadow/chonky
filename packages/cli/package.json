@@ -1,6 +1,6 @@
 {
   "name": "@chonky/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chonky CLI — init, dev, build, graph, optimize, view, revert",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,8 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs --dts",
     "clean": "rm -rf dist",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "yarn run build"
   },
   "dependencies": {
     "@chonky/runtime": "workspace:*",
@@ -24,6 +25,25 @@
     "inquirer": "^13.4.1"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adisonshadow/chonky.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/adisonshadow/chonky/issues"
+  },
+  "homepage": "https://github.com/adisonshadow/chonky/tree/main/packages/cli#readme",
+  "keywords": [
+    "chonky",
+    "cli",
+    "codegen",
+    "machine-first"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "tsup": "^8.5.1"
   }
