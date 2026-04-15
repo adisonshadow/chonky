@@ -1,44 +1,47 @@
-# Chonky 结构化需求定义规范 v1.0
+# Chonky Structured Requirement Definition v1.1
 
-**文档版本：** v1.0  
-**发布日期：** 2026-04-14  
-**文档状态：** 初始发布  
-**所属里程碑：** 1.1 — 核心规范与接口文档冻结
-
----
-
-## 一、概述
-
-本规范定义了 Chonky 语言中 **结构化需求定义** 的完整语法、字段约束和编译行为。`defineRequirement()` 是 Chonky 取代自然语言注释描述功能需求的核心机制：开发者（或 AI Agent）在 `.req.ts` 文件中以 JSON-Schema 风格声明功能逻辑，Babel 插件在构建阶段将其转换为标准 JS 对象导出，同时生成独立的 JSON 清单文件供 AI Agent 读取。
+**Document version:** v1.1  
+**Published:** 2026-04-16  
+**Status:** Current  
+**Milestone:** 1.1 — Core specifications and API freeze
 
 ---
 
-## 二、术语表
+## 1. Overview
 
-| 术语 | 含义 |
+This specification defines **structured requirements** in Chonky: syntax, field constraints, and compile behavior. `defineRequirement()` is the core mechanism for declaring feature intent in a JSON-schema-like shape instead of informal comments. In `.req.ts` files, developers (or AI agents) declare logic; the Babel plugin lowers calls to plain exported objects at build time and emits JSON manifests under `.chonky/requirements/` for agents and tools.
+
+---
+
+## 2. Glossary
+
+| Term | Meaning |
 | :--- | :--- |
-| **需求定义 (Requirement Definition)** | 使用 `defineRequirement()` 声明的结构化功能描述对象 |
-| **需求 ID (Requirement ID)** | 全局唯一的需求标识符，格式为 `REQ-<MODULE>-<SEQ>` |
-| **清单文件 (Manifest)** | 编译时由 Babel 插件输出到 `.chonky/requirements/` 的 JSON 文件 |
-| **触发器 (Trigger)** | 描述何种事件启动该需求逻辑的结构化对象 |
+| **Requirement definition** | Object passed to `defineRequirement()` |
+| **Requirement ID** | Globally unique id: `REQ-<MODULE>-<SEQ>` |
+| **Manifest** | JSON file under `.chonky/requirements/` emitted at build time |
+| **Trigger** | Structured description of what starts the requirement |
+| **Requirement provenance (`origin`)** | Optional: whether the requirement was driven by the user or primarily by AI |
+| **Implementation status** | Optional development progress for the implementation |
+| **Verification status** | Optional progress for tests / `machine:assert` |
 
 ---
 
-## 三、文件约定
+## 3. File conventions
 
-### 3.1 文件命名
+### 3.1 Naming
 
-需求定义文件使用 `.req.ts` 后缀：
+Requirement files use the `.req.ts` suffix:
 
 ```
 <RequirementName>.req.ts
 ```
 
-示例：`UserLogin.req.ts`、`ProductSearch.req.ts`
+Examples: `UserLogin.req.ts`, `ProductSearch.req.ts`
 
-### 3.2 文件放置
+### 3.2 Placement
 
-需求定义文件应放置在与其所描述功能模块同级或邻近的目录中。推荐的组织方式：
+Place files next to the feature they describe. Recommended layout:
 
 ```
 src/
@@ -50,7 +53,7 @@ src/
 │       └── ProductSearch.req.ts
 ```
 
-也允许统一放置在顶层 `requirements/` 目录中：
+Alternatively, a top-level `requirements/` folder is allowed:
 
 ```
 src/
@@ -59,132 +62,157 @@ src/
 │   └── ProductSearch.req.ts
 ```
 
-### 3.3 每文件一个需求
+### 3.3 One requirement per file
 
-每个 `.req.ts` 文件 **必须** 使用 `export default` 导出一个 `defineRequirement()` 调用，且仅包含一个需求定义。
+Each `.req.ts` file **must** use `export default` with exactly one `defineRequirement()` call.
 
 ---
 
-## 四、`defineRequirement()` 函数签名
+## 4. `defineRequirement()` signature
 
 ```typescript
 function defineRequirement(definition: RequirementDefinition): RequirementDefinition;
 ```
 
-该函数在运行时是一个恒等函数（原样返回传入对象）。其核心作用在编译阶段：作为 Babel 插件识别需求定义节点的标记函数。
+At runtime the function is an identity (returns the input). Its role is compile-time: the Babel plugin recognizes the call site.
 
-### 4.1 `RequirementDefinition` 完整类型定义
+### 4.1 `RequirementDefinition`
 
 ```typescript
 interface RequirementDefinition {
-  /** 全局唯一需求标识符 */
   id: string;
-
-  /** 需求的人类可读名称（用于报告与 DevTools 展示） */
   name?: string;
-
-  /** 需求简述 */
   description?: string;
-
-  /** 触发条件列表 */
   triggers: Trigger[];
-
-  /** 前置条件：执行此需求前必须满足的状态 */
   preconditions?: Condition[];
-
-  /** 后置条件：此需求执行完毕后应达到的状态 */
   postconditions?: Condition[];
-
-  /** 副作用声明：此需求执行时产生的外部影响 */
   sideEffects?: SideEffect[];
-
-  /** 优先级（数字越小优先级越高，默认 0） */
   priority?: number;
-
-  /** 关联的需求 ID 列表 */
   dependsOn?: string[];
 
-  /** 自定义元数据，供 Agent 或工具链扩展使用 */
+  /**
+   * Who originated this requirement (optional).
+   * Used in agent / review flows for change approval.
+   */
+  origin?: RequirementOrigin;
+
+  /**
+   * Development-side progress (optional).
+   * Tooling may aggregate completion metrics.
+   */
+  implementationStatus?: ImplementationStatus;
+
+  /**
+   * Test / machine:assert progress (optional).
+   * May diverge from implementation (e.g. implemented but tests failing).
+   */
+  verificationStatus?: VerificationStatus;
+
   metadata?: Record<string, unknown>;
 }
 ```
 
-### 4.2 `Trigger` 类型定义
+#### 4.1.1 `RequirementOrigin`
+
+```typescript
+type RequirementOrigin =
+  | "USER"      // User-driven: written by the user, or drafted by AI and adopted by the user
+  | "AI"        // AI-proposed: added or rewritten by an agent without an explicit user request
+  | "UNKNOWN"; // Unspecified or legacy data; consumers must not assume AI
+```
+
+Semantics:
+
+- **`USER`:** Product intent comes from the user (including natural-language prompts that produce a draft the user accepts). Prompt-only generation **does not** automatically map to `AI`.  
+- **`AI`:** The agent adds, splits, or rewrites a requirement without the user asking for that specific change, and the user has not yet explicitly adopted it (e.g. merge PR, flip to `USER` in a manifest).  
+- **`UNKNOWN`:** Field omitted → may serialize as `UNKNOWN` or omit the key; consumers must not treat as `AI` by default.  
+
+**Normative guidance for agents (not necessarily compiler-enforced):** When `origin === "USER"`, agents **should** confirm with the user (or produce an explicit approval task) before **material** edits to `description`, `triggers`, `preconditions`, `postconditions`, `sideEffects`, or `dependsOn` that change observable behavior or acceptance criteria. For `AI` or `UNKNOWN`, documenting breaking changes is still recommended; the same bar of human confirmation as `USER` is not required by this spec.
+
+#### 4.1.2 `ImplementationStatus`
+
+```typescript
+type ImplementationStatus =
+  | "NOT_STARTED"
+  | "IN_PROGRESS"
+  | "IMPLEMENTED"
+  | "BLOCKED"
+  | "DEFERRED";
+```
+
+#### 4.1.3 `VerificationStatus`
+
+```typescript
+type VerificationStatus =
+  | "NOT_STARTED"
+  | "TESTS_WRITTEN"
+  | "PASSING"
+  | "FAILING"
+  | "SKIPPED"
+  | "NOT_APPLICABLE";
+```
+
+### 4.2 `Trigger`
 
 ```typescript
 interface Trigger {
-  /** 触发器类型 */
   type: TriggerType;
-
-  /** 触发目标（组件名、路由路径、定时器名等） */
   target: string;
-
-  /** 具体事件名称 */
   event: string;
-
-  /** 附加条件：满足此条件时触发器才生效 */
   guard?: string;
 }
 
 type TriggerType =
-  | "UI_EVENT"        // 用户界面事件（click、input、submit 等）
-  | "ROUTE_CHANGE"    // 路由变化
-  | "API_RESPONSE"    // 接口响应到达
-  | "TIMER"           // 定时触发
-  | "STATE_CHANGE"    // 状态变更
-  | "LIFECYCLE"       // 组件生命周期（mount、unmount）
-  | "CUSTOM";         // 自定义触发类型
+  | "UI_EVENT"
+  | "ROUTE_CHANGE"
+  | "API_RESPONSE"
+  | "TIMER"
+  | "STATE_CHANGE"
+  | "LIFECYCLE"
+  | "CUSTOM";
 ```
 
-### 4.3 `Condition` 类型定义
+### 4.3 `Condition`
 
 ```typescript
 interface Condition {
-  /** 条件描述（机器可读的逻辑表达式或自然语言） */
   expression: string;
-
-  /** 条件类型 */
   type: "STATE_CHECK" | "AUTH_CHECK" | "DATA_VALID" | "CUSTOM";
 }
 ```
 
-### 4.4 `SideEffect` 类型定义
+### 4.4 `SideEffect`
 
 ```typescript
 interface SideEffect {
-  /** 副作用类型 */
   type: "API_CALL" | "STATE_MUTATION" | "NAVIGATION" | "STORAGE" | "NOTIFICATION" | "CUSTOM";
-
-  /** 副作用目标（API 路径、状态 key、路由路径等） */
   target: string;
-
-  /** 副作用描述 */
   description?: string;
 }
 ```
 
 ---
 
-## 五、需求 ID 命名规则
+## 5. Requirement ID rules
 
-### 5.1 格式
+### 5.1 Format
 
 ```
 REQ-<MODULE>-<SEQ>
 ```
 
-| 部分 | 规则 | 示例 |
+| Part | Rule | Example |
 | :--- | :--- | :--- |
-| `REQ` | 固定前缀，全大写 | `REQ` |
-| `<MODULE>` | 模块名，全大写，字母与连字符 | `USER-LOGIN`、`PRODUCT` |
-| `<SEQ>` | 两位及以上数字序号 | `01`、`12` |
+| `REQ` | Fixed prefix, uppercase | `REQ` |
+| `<MODULE>` | Uppercase module name, letters and hyphens | `USER-LOGIN`, `PRODUCT` |
+| `<SEQ>` | Two or more digits | `01`, `12` |
 
-### 5.2 唯一性约束
+### 5.2 Uniqueness
 
-- 同一项目中，所有 `.req.ts` 文件的 `id` 字段 **必须** 全局唯一。
-- 编译时若检测到重复 ID，Babel 插件 **必须** 抛出编译错误并中止。
+- `id` **must** be unique across all `.req.ts` files in a project.  
+- Duplicate ids → **compile error**, build stops.  
 
-### 5.3 合法示例
+### 5.3 Valid examples
 
 ```
 REQ-USER-LOGIN-01
@@ -195,26 +223,26 @@ REQ-CART-CHECKOUT-03
 
 ---
 
-## 六、编译行为
+## 6. Compile behavior
 
-### 6.1 编译流程
+### 6.1 Pipeline
 
 ```
-.req.ts 源文件
+.req.ts source
     │
     ▼
-@chonkylang/babel-plugin 识别 defineRequirement() 调用
+@chonkylang/babel-plugin finds defineRequirement()
     │
-    ├──▶ 输出 1: 编译后 JS —— 剥离 defineRequirement 包装，保留纯对象 export
+    ├──▶ Output 1: lowered JS — unwrap call, export plain object
     │
-    └──▶ 输出 2: JSON 清单 —— 写入 .chonky/requirements/<ID>.json
+    └──▶ Output 2: JSON manifest — .chonky/requirements/<ID>.json
 ```
 
-### 6.2 编译后代码
+### 6.2 Lowered code
 
-Babel 插件将 `defineRequirement()` 调用替换为其参数对象本身：
+The plugin replaces `defineRequirement({...})` with `{...}`.
 
-**源代码：**
+**Source:**
 
 ```typescript
 // UserLogin.req.ts
@@ -237,7 +265,7 @@ export default defineRequirement({
 });
 ```
 
-**编译后输出：**
+**Output:**
 
 ```javascript
 // UserLogin.req.js
@@ -260,18 +288,17 @@ export default {
 };
 ```
 
-### 6.3 JSON 清单文件
+### 6.3 JSON manifest
 
-编译时同步输出到 `.chonky/requirements/` 目录：
-
-**文件路径：** `.chonky/requirements/REQ-USER-LOGIN-01.json`
-
-**内容：**
+Path: `.chonky/requirements/REQ-USER-LOGIN-01.json`
 
 ```json
 {
   "id": "REQ-USER-LOGIN-01",
   "sourceFile": "src/features/auth/UserLogin.req.ts",
+  "origin": "USER",
+  "implementationStatus": "IMPLEMENTED",
+  "verificationStatus": "PASSING",
   "triggers": [
     { "type": "UI_EVENT", "target": "LoginButton", "event": "click" }
   ],
@@ -293,17 +320,44 @@ export default {
 }
 ```
 
-JSON 清单文件在原始字段之外附加以下元信息：
+Extra manifest fields:
 
-| 字段 | 说明 |
+| Field | Meaning |
 | :--- | :--- |
-| `sourceFile` | 来源 `.req.ts` 的相对路径（相对项目根目录） |
-| `_chonky.version` | 清单格式版本号 |
-| `_chonky.generatedAt` | 生成时间（ISO 8601） |
+| `sourceFile` | Relative path to the `.req.ts` |
+| `_chonky.version` | Manifest format version |
+| `_chonky.generatedAt` | ISO 8601 generation time |
 
-### 6.4 清单索引文件
+If `origin`, `implementationStatus`, or `verificationStatus` appear in the source object, they **must** be copied into the per-requirement JSON for offline tools and CLI aggregation.
 
-当项目包含多个需求定义时，插件在 `.chonky/requirements/` 下额外输出一份 `index.json`：
+### 6.3.1 Tooling metrics (computed)
+
+These metrics are **derived** by consumers from `.chonky/requirements/*.json` (and optional `index.json`); the plugin need not emit separate rollup files:
+
+| Metric | Suggested definition |
+| :--- | :--- |
+| **Implementation completion** | Count with `implementationStatus === "IMPLEMENTED"` ÷ total counted (may exclude `DEFERRED`) |
+| **Verification pass rate** | Count with `verificationStatus === "PASSING"` ÷ requirements that require verification (may exclude `NOT_APPLICABLE`, `SKIPPED`) |
+| **Overall readiness** | Project-defined weighting, e.g. “implemented and passing” |
+
+CLI / CI should read manifests and emit tables, JSON, or exit codes for gates and reports. **Exact subcommand names and output shapes are versioned with the CLI;** this spec only locks field semantics and manifest shape.
+
+### 6.3.2 Requirement search (CLI)
+
+To help humans and **LLM agents** locate requirements, the CLI **should** expose search over compiled manifests. Reference behavior:
+
+| Usage | Behavior |
+| :--- | :--- |
+| `chonky requirements search <term> [term...]` | Multiple terms are **AND** (all must match). Case-insensitive substring match across `id`, `name`, `description`, `sourceFile`, `origin`, status fields, and serialized `triggers` / `preconditions` / `postconditions` / `sideEffects` / `dependsOn` / `metadata`. |
+| `chonky requirements search --all` | List all compiled requirements (subject to `--limit`). |
+| `chonky requirements search … --json` | Print **one JSON document** to stdout (`projectRoot`, `terms`, `count`, `results[]`, …) for agent parsing; no reliance on terminal colors or tables. |
+| `--root <path>` | Project root (default `.`). |
+
+Search requires `.chonky/requirements/*.json` (e.g. from `chonky build` or an app build with the Chonky plugin). If missing or unreadable, the command **should** exit non-zero and explain via stderr or a JSON `error` field.
+
+### 6.4 Index file
+
+When multiple requirements exist, the plugin may emit `.chonky/requirements/index.json`:
 
 ```json
 {
@@ -326,26 +380,31 @@ JSON 清单文件在原始字段之外附加以下元信息：
 }
 ```
 
-### 6.5 编译错误条件
+### 6.5 Compile errors and warnings
 
-| 条件 | 行为 |
+| Condition | Behavior |
 | :--- | :--- |
-| `id` 字段缺失或为空 | **编译错误**，中止 |
-| `id` 格式不符合 `REQ-<MODULE>-<SEQ>` | **编译警告**（严格模式下升级为错误） |
-| 同项目内出现重复 `id` | **编译错误**，中止 |
-| `triggers` 数组为空 | **编译警告** |
-| `.req.ts` 文件未使用 `export default` | **编译错误** |
+| Missing or empty `id` | **Error**, stop |
+| `id` not matching `REQ-<MODULE>-<SEQ>` | **Warning** (error in strict mode) |
+| Duplicate `id` | **Error**, stop |
+| Empty `triggers` | **Warning** |
+| Not `export default` | **Error** |
+| `origin` not in enum | **Warning** (may error in strict mode) |
+| Invalid `implementationStatus` / `verificationStatus` | **Warning** (may error in strict mode) |
 
 ---
 
-## 七、完整示例：商品搜索需求
+## 7. Full example: product search
 
 ```typescript
 // ProductSearch.req.ts
 export default defineRequirement({
   id: "REQ-PRODUCT-SEARCH-01",
-  name: "商品关键词搜索",
-  description: "用户在搜索框输入关键词并提交后，展示匹配的商品列表",
+  name: "Product keyword search",
+  description: "After the user submits keywords in the search box, show matching products",
+  origin: "USER",
+  implementationStatus: "IN_PROGRESS",
+  verificationStatus: "TESTS_WRITTEN",
   triggers: [
     { type: "UI_EVENT", target: "SearchInput", event: "submit" },
     { type: "UI_EVENT", target: "SearchButton", event: "click" }
@@ -372,8 +431,9 @@ export default defineRequirement({
 
 ---
 
-## 八、变更记录
+## 8. Changelog
 
-| 版本 | 日期 | 说明 |
+| Version | Date | Notes |
 | :--- | :--- | :--- |
-| v1.0 | 2026-04-14 | 初始版本发布 |
+| v1.0 | 2026-04-14 | Initial release |
+| v1.1 | 2026-04-16 | Optional `origin`, `implementationStatus`, `verificationStatus`; provenance semantics and agent change guidance; manifest passthrough and completion aggregation; `chonky requirements search` semantics |

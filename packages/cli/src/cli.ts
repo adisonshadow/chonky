@@ -6,6 +6,7 @@ import { registerGraphCommand } from './commands/graph';
 import { registerOptimizeCommand } from './commands/optimize';
 import { registerViewCommand } from './commands/view';
 import { registerRevertCommand } from './commands/revert';
+import { registerRequirementsCommand } from './commands/requirements';
 
 export const CLI_VERSION = '0.1.1';
 
@@ -24,6 +25,7 @@ export function createCli(): Command {
   registerOptimizeCommand(program);
   registerViewCommand(program);
   registerRevertCommand(program);
+  registerRequirementsCommand(program);
 
   return program;
 }

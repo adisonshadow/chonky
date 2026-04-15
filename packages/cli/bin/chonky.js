@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-require('../dist/index.js');
+const { createCli } = require('../dist/index.js');
+createCli().parseAsync(process.argv);

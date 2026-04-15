@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="200" />
+  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.webp" alt="Chonky logo" width="280" />
 </p>
 
-# 🐝 Chonky（胖蜜蜂）
+# Chonky（胖蜜蜂）
 
 [English](README.md) · **简体中文**
 

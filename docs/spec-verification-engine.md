@@ -1,39 +1,39 @@
-# Chonky 验证规则引擎规范 v1.0
+# Chonky Verification Engine Specification v1.0
 
-**文档版本：** v1.0  
-**发布日期：** 2026-04-14  
-**文档状态：** 初始发布  
-**所属里程碑：** 1.1 — 核心规范与接口文档冻结
-
----
-
-## 一、概述
-
-本规范定义了 Chonky 验证规则引擎（Autonomous Verification Engine）的完整语法、编译目标映射和需求 ID 绑定机制。`machine:assert` 是 Chonky 的语法扩展，允许开发者（或 AI Agent）将验证场景与结构化需求 ID 直接绑定。Babel 插件在构建阶段将 `machine:assert` 块转换为 Jest/Vitest 兼容的测试代码，实现需求定义 → 断言验证的自动闭环。
+**Document version:** v1.0  
+**Published:** 2026-04-14  
+**Status:** Initial release  
+**Milestone:** 1.1 — Core specifications and API freeze
 
 ---
 
-## 二、术语表
+## 1. Overview
 
-| 术语 | 含义 |
+This specification defines the Chonky **Autonomous Verification Engine**: full syntax for `machine:assert`, compile-time lowering to tests, and requirement-ID binding. `machine:assert` is a Chonky syntax extension that lets developers (or AI agents) bind verification scenarios directly to structured requirement IDs. The Babel plugin lowers each block to Jest/Vitest-compatible tests at build time, closing the loop from requirement definitions to executable assertions.
+
+---
+
+## 2. Glossary
+
+| Term | Meaning |
 | :--- | :--- |
-| **machine:assert 块** | Chonky 扩展语法块，用于声明针对某需求的验证场景 |
-| **场景 (Scenario)** | `machine:assert` 块内的单个测试场景，对应一个 `scenario()` 调用 |
-| **需求 ID 绑定** | `machine:assert` 块通过 `for "ID"` 子句与 `.req.ts` 中的需求 ID 关联 |
-| **编译目标** | Babel 插件将 `machine:assert` 转换后生成的 Jest/Vitest 测试代码 |
+| **machine:assert block** | Chonky syntax block declaring verification scenarios for a requirement |
+| **Scenario** | A single test scenario inside a `machine:assert` block, corresponding to one `scenario()` call |
+| **Requirement ID binding** | The `for "ID"` clause associates the block with an `id` from a `.req.ts` file |
+| **Compile target** | Test code emitted by the Babel plugin after lowering `machine:assert` |
 
 ---
 
-## 三、语法定义
+## 3. Syntax
 
-### 3.1 EBNF 形式
+### 3.1 EBNF
 
 ```ebnf
 MachineAssertBlock
   = "machine" ":" "assert" "for" RequirementIdLiteral AssertBody ;
 
 RequirementIdLiteral
-  = StringLiteral ;                        (* 例如 "REQ-USER-LOGIN-01" *)
+  = StringLiteral ;                        (* e.g. "REQ-USER-LOGIN-01" *)
 
 AssertBody
   = "{" ScenarioDeclaration+ "}" ;
@@ -42,20 +42,20 @@ ScenarioDeclaration
   = "scenario" "(" ScenarioName "," ScenarioFunction ")" ";" ;
 
 ScenarioName
-  = StringLiteral ;                        (* 场景描述，例如 "Password too short" *)
+  = StringLiteral ;                        (* e.g. "Password too short" *)
 
 ScenarioFunction
-  = ArrowFunction | FunctionExpression ;   (* 包含断言逻辑的函数体 *)
+  = ArrowFunction | FunctionExpression ;   (* body containing assertions *)
 ```
 
-### 3.2 语法说明
+### 3.2 Notes
 
-- `machine:assert` 是一个 **语句级** 语法扩展，只能出现在模块顶层或函数体顶层，不能嵌套在表达式中。
-- `for` 后跟的字符串字面量 **必须** 是一个有效的需求 ID（格式参见《结构化需求定义规范》）。
-- `AssertBody` 内 **至少** 包含一个 `scenario()` 声明。
-- `scenario()` 内可使用任意 TypeScript/JavaScript 表达式，包括 `async/await`。
+- `machine:assert` is a **statement-level** extension. It may appear at module top level or at the top level of a function body, not nested inside an expression.
+- The string after `for` **must** be a valid requirement ID (format: see *Structured requirement definition*).
+- `AssertBody` **must** contain at least one `scenario()` declaration.
+- `scenario()` bodies may use any TypeScript/JavaScript, including `async/await`.
 
-### 3.3 语法示例
+### 3.3 Example
 
 ```typescript
 machine:assert for "REQ-USER-LOGIN-01" {
@@ -79,31 +79,31 @@ machine:assert for "REQ-USER-LOGIN-01" {
 
 ---
 
-## 四、编译目标映射
+## 4. Compile target mapping
 
-### 4.1 转换规则
+### 4.1 Rules
 
-Babel 插件将每个 `machine:assert` 块转换为一个独立的测试文件，规则如下：
+The Babel plugin emits one test file per requirement ID referenced from a source tree, as follows:
 
-| 源代码元素 | 编译目标 |
+| Source | Output |
 | :--- | :--- |
-| `machine:assert for "ID" { ... }` | 生成 `__tests__/<ID>.test.ts` 文件 |
-| `scenario("name", fn)` | 转换为 `test('ID \| name', fn)` |
-| 断言体内的 `expect(...)` | 保留原样（来自 `@chonkylang/runtime/test`） |
+| `machine:assert for "ID" { ... }` | File `__tests__/<ID>.test.ts` (relative to the source file) |
+| `scenario("name", fn)` | `test('ID \| name', fn)` |
+| `expect(...)` inside the body | Preserved (from `@chonkylang/runtime/test`) |
 
-### 4.2 输出文件路径
+### 4.2 Output path
 
 ```
 __tests__/<RequirementID>.test.ts
 ```
 
-- 路径相对于源文件所在目录。
-- 如果源文件位于 `src/features/auth/LoginAssert.cts`，则输出到 `src/features/auth/__tests__/REQ-USER-LOGIN-01.test.ts`。
-- 当多个源文件包含指向同一 ID 的 `machine:assert` 块时，所有 scenario 合并到同一输出文件。
+- Path is relative to the directory containing the source file.
+- Example: source `src/features/auth/LoginAssert.cts` → `src/features/auth/__tests__/REQ-USER-LOGIN-01.test.ts`.
+- If multiple source files contain `machine:assert` for the same ID, all scenarios are merged into one output file.
 
-### 4.3 编译示例
+### 4.3 Example
 
-**源代码（`src/features/auth/LoginAssert.cts`）：**
+**Source (`src/features/auth/LoginAssert.cts`):**
 
 ```typescript
 machine:assert for "REQ-USER-LOGIN-01" {
@@ -123,7 +123,7 @@ machine:assert for "REQ-USER-LOGIN-01" {
 }
 ```
 
-**编译输出（`src/features/auth/__tests__/REQ-USER-LOGIN-01.test.ts`）：**
+**Output (`src/features/auth/__tests__/REQ-USER-LOGIN-01.test.ts`):**
 
 ```typescript
 import { test, expect, describe } from '@chonkylang/runtime/test';
@@ -145,23 +145,21 @@ describe('REQ-USER-LOGIN-01', () => {
 });
 ```
 
-### 4.4 Import 来源
+### 4.4 Imports
 
-所有测试辅助函数均从 `@chonkylang/runtime/test` 导入：
+Generated tests import helpers from `@chonkylang/runtime/test`:
 
 ```typescript
 import { test, expect, describe, beforeEach, afterEach } from '@chonkylang/runtime/test';
 ```
 
-`@chonkylang/runtime/test` 在底层委托给项目实际安装的测试框架（Jest 或 Vitest），通过以下检测顺序自动适配：
+That module delegates to the project’s real test runner, detected in order:
 
-1. 检查 `vitest` 是否可导入 → 使用 Vitest
-2. 检查 `jest` 全局对象是否存在 → 使用 Jest
-3. 均不存在 → 编译时发出警告，生成的测试文件头部附加说明注释
+1. If `vitest` can be resolved → Vitest  
+2. Else if Jest globals exist → Jest  
+3. Else → compile-time warning; emitted file may include a header comment explaining the gap  
 
-### 4.5 编译输出元数据
-
-每个生成的测试文件头部包含元信息注释：
+### 4.5 Generated file header
 
 ```typescript
 /**
@@ -177,42 +175,42 @@ import { test, expect, describe, beforeEach, afterEach } from '@chonkylang/runti
 
 ---
 
-## 五、需求 ID 绑定机制
+## 5. Requirement ID binding
 
-### 5.1 绑定关系
+### 5.1 Traceability
 
-`machine:assert for "ID"` 中的 ID 建立一条从**验证场景**到**需求定义**的可追溯链：
+The ID in `machine:assert for "ID"` links **verification scenarios** to **requirement definitions**:
 
 ```
-.req.ts (defineRequirement)  ←──绑定──→  machine:assert (验证场景)
+.req.ts (defineRequirement)  ←──bound──→  machine:assert (scenarios)
          │                                          │
          ▼                                          ▼
   .chonky/requirements/ID.json              __tests__/ID.test.ts
 ```
 
-### 5.2 ID 一致性校验
+### 5.2 ID consistency checks
 
-Babel 插件在编译 `machine:assert` 块时，会查询已编译的 `.req.ts` 清单：
+When lowering `machine:assert`, the plugin consults compiled `.req.ts` manifests:
 
-| 情况 | 默认行为 | 严格模式行为 |
+| Case | Default | Strict mode |
 | :--- | :--- | :--- |
-| ID 存在于清单中 | 正常编译 | 正常编译 |
-| ID 不存在于清单中 | **编译警告**：`Assertion references unknown requirement "ID"` | **编译错误**，中止 |
-| 需求存在但无对应 assert | **编译警告**：`Requirement "ID" has no associated assertions` | **编译警告** |
+| ID exists in manifest | OK | OK |
+| ID missing from manifest | **Warning:** `Assertion references unknown requirement "ID"` | **Error**, build stops |
+| Requirement exists but has no assert | **Warning:** `Requirement "ID" has no associated assertions` | **Warning** |
 
-严格模式通过 `chonky.config.js` 开启：
+Enable strict binding in `chonky.config.js`:
 
 ```javascript
 module.exports = {
   verification: {
-    strictBinding: true   // 未匹配 ID 升级为编译错误
+    strictBinding: true   // unknown ID → compile error
   }
 };
 ```
 
-### 5.3 跨文件绑定
+### 5.3 Cross-file binding
 
-一个需求 ID 可以在**多个源文件**中被不同的 `machine:assert` 块引用。编译器将所有引用同一 ID 的 scenario 合并到同一测试文件中，并在 `describe` 块内按源文件分组：
+The same requirement ID may appear in **multiple** source files. The compiler merges all scenarios into one test file and may group them by source path inside `describe`:
 
 ```typescript
 describe('REQ-USER-LOGIN-01', () => {
@@ -228,30 +226,30 @@ describe('REQ-USER-LOGIN-01', () => {
 
 ---
 
-## 六、`verify()` 运行时辅助函数
+## 6. `verify()` runtime helper
 
-### 6.1 函数签名
+### 6.1 Signature
 
 ```typescript
 function verify(requirementId: string, assertion: () => void | Promise<void>): void;
 ```
 
-### 6.2 用途
+### 6.2 Purpose
 
-`verify()` 用于在**开发环境运行时**（非测试环境）即时检查断言，适用于以下场景：
+`verify()` runs checks **at runtime in development** (not only in tests), for example:
 
-- 在应用运行过程中验证某一需求的后置条件
-- Agent 自动插入的运行时守卫
+- Checking postconditions while the app runs  
+- Guards agents can inject  
 
-### 6.3 行为
+### 6.3 Behavior
 
-| 环境 | 行为 |
+| Environment | Behavior |
 | :--- | :--- |
-| **开发环境** | 执行断言函数；失败时向 `window.__CHONKY_LOGS__` 写入错误日志，并在控制台输出警告 |
-| **测试环境** | 委托给测试框架的断言机制 |
-| **生产环境** | 函数体为空（no-op），被 Tree-Shaking 移除 |
+| **Development** | Runs the assertion; on failure logs to `window.__CHONKY_LOGS__` and warns in the console |
+| **Test** | Delegates to the test framework’s assertion machinery |
+| **Production** | No-op, removed by tree-shaking |
 
-### 6.4 示例
+### 6.4 Example
 
 ```typescript
 import { verify } from '@chonkylang/runtime';
@@ -266,15 +264,15 @@ verify("REQ-USER-LOGIN-01", () => {
 
 ---
 
-## 七、完整端到端示例
+## 7. End-to-end example
 
-### 步骤 1：定义需求
+### Step 1: Define the requirement
 
 ```typescript
 // src/features/cart/AddToCart.req.ts
 export default defineRequirement({
   id: "REQ-CART-ADD-01",
-  name: "添加商品到购物车",
+  name: "Add product to cart",
   triggers: [
     { type: "UI_EVENT", target: "AddToCartButton", event: "click" }
   ],
@@ -293,7 +291,7 @@ export default defineRequirement({
 });
 ```
 
-### 步骤 2：编写验证场景
+### Step 2: Write scenarios
 
 ```typescript
 // src/features/cart/CartAssertions.cts
@@ -325,9 +323,9 @@ machine:assert for "REQ-CART-ADD-01" {
 }
 ```
 
-### 步骤 3：编译输出
+### Step 3: Generated file
 
-**生成文件：** `src/features/cart/__tests__/REQ-CART-ADD-01.test.ts`
+**Path:** `src/features/cart/__tests__/REQ-CART-ADD-01.test.ts`
 
 ```typescript
 /**
@@ -369,30 +367,30 @@ describe('REQ-CART-ADD-01', () => {
 });
 ```
 
-### 步骤 4：运行测试
+### Step 4: Run tests
 
 ```bash
 chonky test
-# 或直接使用项目测试框架
+# or invoke the project runner directly
 npx vitest run __tests__/REQ-CART-ADD-01.test.ts
 ```
 
 ---
 
-## 八、编译错误与警告汇总
+## 8. Errors and warnings
 
-| 条件 | 默认行为 | 严格模式行为 |
+| Condition | Default | Strict mode |
 | :--- | :--- | :--- |
-| `machine:assert` 缺少 `for` 子句 | **编译错误** | **编译错误** |
-| `for` 后的字符串不符合需求 ID 格式 | **编译警告** | **编译错误** |
-| `AssertBody` 内无 `scenario()` 声明 | **编译错误** | **编译错误** |
-| 引用的需求 ID 未在任何 `.req.ts` 中定义 | **编译警告** | **编译错误** |
-| 同一 ID + 同一 scenario name 重复出现 | **编译警告**（合并时后者覆盖） | **编译错误** |
+| `machine:assert` without `for` | **Error** | **Error** |
+| `for` string not a valid requirement ID format | **Warning** | **Error** |
+| No `scenario()` in body | **Error** | **Error** |
+| ID not defined in any `.req.ts` | **Warning** | **Error** |
+| Duplicate same ID + same scenario name | **Warning** (last wins on merge) | **Error** |
 
 ---
 
-## 九、变更记录
+## 9. Changelog
 
-| 版本 | 日期 | 说明 |
+| Version | Date | Notes |
 | :--- | :--- | :--- |
-| v1.0 | 2026-04-14 | 初始版本发布 |
+| v1.0 | 2026-04-14 | Initial release |

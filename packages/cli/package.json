@@ -1,7 +1,7 @@
 {
   "name": "@chonkylang/cli",
   "version": "0.1.1",
-  "description": "Chonky CLI — init, dev, build, graph, optimize, view, revert",
+  "description": "Chonky CLI — init, dev, build, graph, optimize, view, revert, requirements",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {

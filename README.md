@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.png" alt="Chonky logo" width="200" />
+  <img src="https://raw.githubusercontent.com/adisonshadow/chonky/main/docs/logo.webp" alt="Chonky logo" width="280" />
 </p>
 
-# 🐝 Chonky 
+# Chonky 
 
 **English** · [简体中文](README.zh-CN.md)
 
@@ -117,6 +117,12 @@ Then, change your `.tsx` file extensions to `.cts` (Chonky TypeScript) and start
 npm run chonky dev   # Start dev server, automatically enable metadata collection
 npm run chonky build # Build for production, automatically tree-shake all debugging code
 ```
+
+---
+
+## 🤖 Agent Skills (Cursor and AI assistants)
+
+This repository includes **project-level Agent Skills** under `.cursor/skills/chonky-development/` so coding assistants follow the correct Yarn 4 workflows, `chonky` CLI usage, requirement authoring patterns, and links into the `docs/` specifications. For Cursor Agent Skills (install, routing, model read order), see **[docs/cursor-chonky-agent-skills-guide.md](./docs/cursor-chonky-agent-skills-guide.md)**. For a standalone Chonky dev reference in `docs/`, see **[docs/chonky-ai-development-playbook.md](./docs/chonky-ai-development-playbook.md)**.
 
 ---
 

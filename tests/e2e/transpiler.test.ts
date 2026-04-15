@@ -287,5 +287,10 @@ describe('Test 6: CLI integration', () => {
     expect(commandNames).toContain('optimize');
     expect(commandNames).toContain('view');
     expect(commandNames).toContain('revert');
+    expect(commandNames).toContain('requirements');
+
+    const requirementsCmd = cli.commands.find((c) => c.name() === 'requirements');
+    const subNames = requirementsCmd?.commands.map((c) => c.name()) ?? [];
+    expect(subNames).toContain('search');
   });
 });

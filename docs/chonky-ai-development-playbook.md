@@ -1,20 +1,8 @@
----
-name: chonky-development
-description: >-
-  Guides installation, initialization, authoring, build integration, and testing for the Chonky
-  machine-first web language and monorepo. Use when working on Chonky, @chonkylang/* packages,
-  defineRequirement, machine:assert, chonky CLI (init, dev, build, view, revert, graph, optimize),
-  pm-requirement.json, Vite/Webpack plugins, or examples/todomvc.
----
-
-<!--
-  Optional YAML block above: safe to remove for tools that do not use frontmatter.
-  The sections below are self-contained without it.
--->
-
-# Chonky — AI assistant playbook
+# Chonky — AI development playbook
 
 This document is **tool-agnostic**: it works as project knowledge for any AI coding assistant, not a specific IDE. Copy it into a wiki, system prompt, or `AGENTS.md`-style entry as needed.
+
+The canonical **Cursor Agent Skill** for this repository (routing tables and progressive reference files) lives under `.cursor/skills/chonky-development/`. To install or use that layout in Cursor, read **[cursor-chonky-agent-skills-guide.md](cursor-chonky-agent-skills-guide.md)**.
 
 ## What Chonky is (short)
 
@@ -118,6 +106,7 @@ Generated tests typically land next to the file under `__tests__/<REQ-ID>.test.t
 | `chonky dev` | Development loop; preprocesses `machine:assert`, integrates with config |
 | `chonky build` | Transpile with Chonky Babel plugin, emit artifacts under `.chonky/` |
 | `chonky graph` | Dependency graph from requirement manifests (JSON/dot/mermaid) |
+| `chonky requirements search` | Search compiled manifests (`--json` / `--all` for agents) |
 | `chonky optimize` | Asset / suggestion pass driven by `optimizer` config |
 | `chonky view <file>` | Human-readable “semantic view” of machine-oriented source |
 | `chonky revert <file>` | Reverse direction toward machine-oriented output (`--dry-run`, `--apply-babel`) |
